@@ -108,11 +108,8 @@ export default function ProfilePage({ searchParams }: Props) {
             icon: <Bell className="w-5 h-5 mb-2" />,
           },
         ].map((item, i) => (
-          <Link href={item.link}>
-            <div
-              key={i}
-              className="bg-[#262626] p-4 rounded-lg flex flex-col items-center text-center"
-            >
+          <Link key={i} href={item.link}>
+            <div className="bg-[#262626] p-4 rounded-lg flex flex-col items-center text-center">
               {item.icon}
               <div className="text-sm font-medium">{item.title}</div>
               <div className="text-xs text-gray-500 mt-1">{item.subtitle}</div>
