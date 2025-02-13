@@ -1,23 +1,24 @@
 "use client";
 
-import Image from "next/image";
-import Notification from "./_components/notification";
+import { Badge } from "@/components/ui/badge";
 import {
+  ArrowRight,
   Bell,
   ChevronLeft,
   HelpCircle,
-  Mail,
   LayoutGrid,
+  Mail,
   UserPlus,
 } from "lucide-react";
-import { ArrowRight } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import Image from "next/image";
+import Notification from "./_components/notification";
 
-import { BusinessSectionList, UserSectionList } from "./_components/section";
 import { Separator } from "@/components/ui/separator";
+import { BusinessSectionList, UserSectionList } from "./_components/section";
 
-import ProfileSetting from "@/app/(main)/mypage/_components/profile-setting";
 import BambooCarousel from "@/app/(main)/chat-list/_components/bamboo-carousel";
+import ProfileSetting from "@/app/(main)/mypage/_components/profile-setting";
+import Link from "next/link";
 
 function ProfileSection({ levelPercentage }: { levelPercentage: number }) {
   return (
@@ -91,27 +92,32 @@ export default function ProfilePage({ searchParams }: Props) {
           {
             title: "홈 위젯 설정",
             subtitle: "편리한 이용",
+            link: "",
             icon: <LayoutGrid className="w-5 h-5 mb-2" />,
           },
           {
             title: "친구초대",
             subtitle: "간단한 초대",
+            link: "/mypage/invite",
             icon: <UserPlus className="w-5 h-5 mb-2" />,
           },
           {
             title: "알림설정",
             subtitle: "중요한알림설정",
+            link: "",
             icon: <Bell className="w-5 h-5 mb-2" />,
           },
         ].map((item, i) => (
-          <div
-            key={i}
-            className="bg-[#262626] p-4 rounded-lg flex flex-col items-center text-center"
-          >
-            {item.icon}
-            <div className="text-sm font-medium">{item.title}</div>
-            <div className="text-xs text-gray-500 mt-1">{item.subtitle}</div>
-          </div>
+          <Link href={item.link}>
+            <div
+              key={i}
+              className="bg-[#262626] p-4 rounded-lg flex flex-col items-center text-center"
+            >
+              {item.icon}
+              <div className="text-sm font-medium">{item.title}</div>
+              <div className="text-xs text-gray-500 mt-1">{item.subtitle}</div>
+            </div>
+          </Link>
         ))}
       </div>
 
