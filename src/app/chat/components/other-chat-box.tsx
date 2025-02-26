@@ -2,14 +2,15 @@ import React from 'react';
 import ChatImoji from "@/app/chat/components/chat-imoji";
 
 
-const OtherChatBox = ({content, showProfile, time, imoji}: {
+const OtherChatBox = ({content, showProfile, time, imoji, onClick}: {
     content: string,
     showProfile?: boolean,
     time?: string,
     imoji?: boolean
+    onClick: () => void
 }) => {
     return (
-        <div className={'flex w-full gap-2 mr-auto'}>
+        <div role={'presentation'} onClick={onClick} className={'flex w-full gap-2 mr-auto'}>
             <div className={'flex flex-col justify-center gap-1'}>
                 {/*    profile */}
                 {

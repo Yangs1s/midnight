@@ -2,7 +2,9 @@
 import React, {Fragment} from 'react';
 import UserChatBox from "@/app/chat/components/user-chat-box";
 import OtherChatBox from "@/app/chat/components/other-chat-box";
-import Image from "next/image";
+
+import BottomOverlayPortal from "@/components/ui/BottomOverlay";
+import ChatInput from "@/app/chat/components/chat-Input";
 
 const chat_mock_data = [
     {"sender": "user", "message": "안녕, 오늘 하루 어땠어?", "time": "오전 10:30"},
@@ -43,15 +45,16 @@ const chat_mock_data = [
 ];
 
 const ChatBody = () => {
+    const [isReply, setIsReply] = React.useState(false);
     return (
         <div
-            className={'top-36 h-screen mt-8  absolute w-full px-4'}>
+            className={'top-36 h-screen mt-8  absolute w-full '}>
             <div className={'flex text-color relative opacity-30 justify-center my-6'}>
                 <p className={'bg-[#1b1b1e] px-4 z-10 text-[12px]'}>2024년 09월 30일(월)</p>
                 <div className={'h-[1px] bg-white w-full absolute top-[7px] opacity-30'}>&nbsp;</div>
             </div>
 
-            <div className={'mb-4 pb-24'}>
+            <div className={'mb-4 pb-24 px-4'}>
                 {
                     chat_mock_data.map((data, index) => {
                         // 첫 요소는 간격 없음, 그 외에는 이전 메시지와 sender 비교
@@ -64,6 +67,9 @@ const ChatBody = () => {
                                 <Fragment key={index}>
                                     <div className={gapClass}>
                                         <OtherChatBox
+                                            onClick={() => {
+                                                setIsReply(true);
+                                            }}
                                             content={data.message}
                                             showProfile={showProfile}
                                             time={data.time}
@@ -87,15 +93,10 @@ const ChatBody = () => {
                         }
                     })
                 }
+
             </div>
-            <div
-                className={'bg-[#2D2D2D] z-40 w-full items-center justify-between fixed bottom-20 flex h-[48px] '}>
-                <div className={'bg-white rounded-full w-[24px] h-[24px]'}>&nbsp;</div>
-                <p className={'w-full'}>
-                    안녕하세요
-                </p>
-                <Image src={'/icon/xIcon.svg'} alt={'닫기'} width={24} height={24}/>
-            </div>
+            <ChatInput search={false} isReply={isReply}/>
+            <BottomOverlayPortal isReply={isReply} setIsReply={setIsReply}/>
         </div>
     );
 };

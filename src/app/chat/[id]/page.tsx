@@ -37,7 +37,7 @@ export default function Page({params}: Props) {
                 content={response.content}
             />
             <ChatBody/>
-            <ChatInput search={false}/>
+            {/*<ChatInput search={false} isReply={false}/>/*/}
         </div>
     );
 }
