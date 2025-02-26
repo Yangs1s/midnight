@@ -23,6 +23,7 @@ type FormValues = z.infer<typeof formSchema>;
 export default function ProfileSetting() {
   const [preview, setPreview] = useState<string>("/random-profile.png");
   const fileRef = useRef<HTMLInputElement>(null);
+  const [isActive, setActive] = useState<boolean>(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isCameraOpen, setIsCameraOpen] = useState(false);
 
@@ -57,8 +58,13 @@ export default function ProfileSetting() {
   };
 
   useEffect(() => {
+    if (!isActive) return;
     setIsDrawerOpen(!isCameraOpen);
   }, [isCameraOpen]);
+
+  useEffect(() => {
+    setActive(true);
+  }, []);
 
   return (
     <>
