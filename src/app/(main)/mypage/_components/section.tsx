@@ -9,7 +9,6 @@ export function UserSectionList() {
           { label: "회원정보 수정", href: "/mypage/setting" },
           { label: "알림 설정", href: "/mypage/setting" },
           { label: "차단 목록", href: "/mypage/setting" },
-          { label: "신고 목록", href: "/mypage/setting" },
         ]}
       />
 
@@ -17,20 +16,21 @@ export function UserSectionList() {
         title="고객센터"
         items={[
           { label: "1:1 문의", href: "/mypage/setting" },
-          { label: "FAQ", href: "/mypage/setting" },
           { label: "내 문의내역", href: "/mypage/setting" },
-          { label: "고객의 소리", href: "/mypage/setting" },
+          { label: "FAQ", href: "/mypage/setting" },
+          { label: "피드백 보내기", href: "/mypage/setting" },
         ]}
       />
 
       <Section
-        title="ABOUT `12 테라스"
+        title="ABOUT 미드나잇테라스"
         items={[
           { label: "공지사항", href: "/mypage/setting" },
           { label: "이벤트", href: "/mypage/setting" },
           { label: "약관 및 정책", href: "/mypage/setting" },
-          { label: "미드나잇테라스(11글자)", href: "/mypage/setting" },
+          { label: "미드나잇테라스 소개", href: "/mypage/setting" },
         ]}
+        isLast={true}
       />
     </div>
   );
@@ -55,7 +55,6 @@ export function BusinessSectionList() {
           { label: "회원정보 수정", href: "/mypage/setting" },
           { label: "알림 설정", href: "/mypage/setting" },
           { label: "차단 목록", href: "/mypage/setting" },
-          { label: "신고 목록", href: "/mypage/setting" },
         ]}
       />
 
@@ -63,20 +62,21 @@ export function BusinessSectionList() {
         title="고객센터"
         items={[
           { label: "1:1 문의", href: "/mypage/setting" },
-          { label: "FAQ", href: "/mypage/setting" },
           { label: "내 문의내역", href: "/mypage/setting" },
-          { label: "고객의 소리", href: "/mypage/setting" },
+          { label: "FAQ", href: "/mypage/setting" },
+          { label: "피드백 보내기", href: "/mypage/setting" },
         ]}
       />
 
       <Section
-        title="ABOUT 테라스"
+        title="ABOUT 미드나잇테라스"
         items={[
           { label: "공지사항", href: "/mypage/setting" },
-          { label: "약관 및 정책", href: "/mypage/setting" },
           { label: "이벤트", href: "/mypage/setting" },
-          { label: "`12 테라스 소개", href: "/mypage/setting" },
+          { label: "약관 및 정책", href: "/mypage/setting" },
+          { label: "미드나잇테라스 소개", href: "/mypage/setting" },
         ]}
+        isLast={true}
       />
     </div>
   );
@@ -88,13 +88,16 @@ interface SectionProps {
     label: string;
     href?: string;
   }[];
+  isLast?: boolean;
 }
 
-export function Section({ title, items }: SectionProps) {
+export function Section({ title, items, isLast }: SectionProps) {
   return (
-    <section className="mb-6 pb-6 border-b border-white/10">
-      <p className="mb-3 w-full text-xs text-muted-foreground">{title}</p>
-      <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+    <section
+      className={`mb-6 pb-6 ${isLast ? "border-none" : "border-b"}  border-white/5`}
+    >
+      <p className="mb-6 w-full text-sm text-white/60">{title}</p>
+      <div className="grid grid-cols-2 gap-x-4 gap-y-4">
         {items.map((item, i) => (
           <Link key={i} href={item.href ?? ""}>
             <span>{item.label}</span>

@@ -22,7 +22,7 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 export default function ProfileSetting() {
-  const [preview, setPreview] = useState<string>("/images.jpeg");
+  const [preview, setPreview] = useState<string>("/random-profile.png");
   const fileRef = useRef<HTMLInputElement>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -59,7 +59,7 @@ export default function ProfileSetting() {
   return (
     <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
       <DrawerTrigger>
-        <span className="px-6 py-2 bg-[#262626] rounded-full text-sm">
+        <span className="px-4 py-2 bg-[#262626] rounded-full text-sm">
           편집
         </span>
       </DrawerTrigger>
