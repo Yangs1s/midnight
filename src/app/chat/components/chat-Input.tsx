@@ -10,7 +10,7 @@ const ChatInput = ({search, isReply}: { isReply: boolean, search: boolean }) => 
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const [footerContent, setFooterContent] = useState(false);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
-    const [openSheet, setOpenSheet] = useState(0);
+    const [openSheet, setOpenSheet] = useState(-1);
     const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setMessage(e.target.value);
         if (textareaRef.current) {
@@ -82,7 +82,7 @@ const ChatInput = ({search, isReply}: { isReply: boolean, search: boolean }) => 
                                 )}
                             </div>
                             {/*전송 버튼*/}
-                            <button className={'pb-2'}>
+                            <button className={'pb-1'}>
                                 <Image width={32} height={32} src="/icon/send.svg" alt="전송 아이콘"/>
                             </button>
                         </div>
@@ -106,8 +106,9 @@ const ChatInput = ({search, isReply}: { isReply: boolean, search: boolean }) => 
                             <p className={'text-[14px]'}>남은 채팅 수 <em className={'text-[#BB94FF]'}>20</em></p>
                             <Image width={24} height={24} src="/icon/dragDrop.svg" alt="전송 아이콘"/>
                         </div>
-                        <ul className={'flex items-center justify-around w-full  py-5'}>
+                        <ul className={'flex items-center justify-around w-full  py-5 px-4'}>
                             <li className={'flex flex-col items-center gap-2 '} onClick={() => {
+                                setOpenSheet(0)
                             }}>
                                 <Image width={24} height={24} src="/icon/userIcon.svg" alt="전송 아이콘"/>
                                 <p className={'text-[14px]'}>닉네임 변경</p>
@@ -124,7 +125,7 @@ const ChatInput = ({search, isReply}: { isReply: boolean, search: boolean }) => 
                     </div>
                 </div>
             }
-            
+
         </div>
     );
 };
