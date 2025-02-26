@@ -139,7 +139,7 @@ export default function AboutPage({ searchParams }: Props) {
         className="!border-none"
         backUrl={"/mypage"}
       />
-      <Tabs defaultValue="notice" className="w-full !ml-0">
+      <Tabs defaultValue={type || "notice"} className="w-full !ml-0">
         <TabsList className="w-full bg-transparent border-b border-[#26252a] flex justify-start gap-4 !p-0">
           <TabsTrigger
             value="notice"
