@@ -42,13 +42,15 @@ function ProfileSection() {
         </div>
         <div className="flex-1">
           <div className="flex items-center gap-2">
-            <h2 className="text-lg font-semibold">신사동 장원영</h2>
-            <span className="bg-primary text-white text-sm rounded-[4px] px-2 py-[2px]">
+            <h2 className="text-lg font-semibold  text-nowrap">
+              신사동 장원영
+            </h2>
+            <span className="bg-primary text-white text-sm rounded-[4px] px-2 py-[2px]  text-nowrap">
               일반
             </span>
-            <span className="bg-[#438ADC] text-white text-sm rounded-[4px] px-2 py-[2px]">
-              기업
-            </span>
+            {/*<span className="bg-[#438ADC] text-white text-sm rounded-[4px] px-2 py-[2px]">*/}
+            {/*  기업*/}
+            {/*</span>*/}
           </div>
           {/*<div className="flex items-center gap-2 mt-1">*/}
           {/*  <div className="text-sm">Lv.1</div>*/}
@@ -147,10 +149,12 @@ export default function ProfilePage({ searchParams }: Props) {
           },
         ].map((item, i) => (
           <Link key={i} href={item.link}>
-            <div className="bg-[#2F2F32] p-4 rounded-[4px] flex flex-col items-center text-center">
+            <div className="bg-[#2F2F32] px-4 py-3 rounded-[4px] flex flex-col items-center text-center">
               {item.icon}
-              <div className="text-sm font-medium mt-2">{item.title}</div>
-              <div className="text-xs text-gray-500 mt-[2px]">
+              <div className="text-[13px] font-medium mt-2 text-nowrap">
+                {item.title}
+              </div>
+              <div className="text-xs text-gray-500 mt-[2px] text-nowrap">
                 {item.subtitle}
               </div>
             </div>
