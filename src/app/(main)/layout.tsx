@@ -8,8 +8,8 @@ export default function MainLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div className="min-h-screen relative mb-12">
-            <div className={'p-4'}>
+        <div className="min-h-screen w-full relative mb-12">
+            <div className={'p-4 '}>
                 {children}
             </div>
             <FooterNav/>
