@@ -25,9 +25,9 @@ export function UserSectionList() {
       <Section
         title="ABOUT 미드나잇테라스"
         items={[
-          { label: "공지사항", href: "/mypage/setting" },
-          { label: "이벤트", href: "/mypage/setting" },
-          { label: "약관 및 정책", href: "/mypage/setting" },
+          { label: "공지사항", href: "/board/about?type=notice" },
+          { label: "이벤트", href: "/board/about?type=event" },
+          { label: "약관 및 정책", href: "/board/terms" },
           { label: "미드나잇테라스 소개", href: "/mypage/setting" },
         ]}
         isLast={true}
@@ -71,9 +71,9 @@ export function BusinessSectionList() {
       <Section
         title="ABOUT 미드나잇테라스"
         items={[
-          { label: "공지사항", href: "/mypage/setting" },
-          { label: "이벤트", href: "/mypage/setting" },
-          { label: "약관 및 정책", href: "/mypage/setting" },
+          { label: "공지사항", href: "/board/about?type=notice" },
+          { label: "이벤트", href: "/board/about?type=event" },
+          { label: "약관 및 정책", href: "/board/terms" },
           { label: "미드나잇테라스 소개", href: "/mypage/setting" },
         ]}
         isLast={true}
