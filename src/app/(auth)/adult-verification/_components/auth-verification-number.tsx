@@ -22,7 +22,11 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-export default function AuthVerificationNumber({type}: {type: 'user' | 'company'}) {
+export default function AuthVerificationNumber({
+  type,
+}: {
+  type: "user" | "company";
+}) {
   const router = useRouter();
 
   const form = useForm<FormValues>({
@@ -44,8 +48,8 @@ export default function AuthVerificationNumber({type}: {type: 'user' | 'company'
           href="/adult-verification?step=2"
           className="inline-flex items-center"
         >
-          <ArrowLeft className="w-6 h-6 mr-2" />
-          <span className="text-lg">휴대폰 본인인증</span>
+          <ArrowLeft className="w-6 h-6 mr-4" />
+          <span className="text-lg">회원가입</span>
         </Link>
       </div>
 

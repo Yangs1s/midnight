@@ -200,7 +200,7 @@ export default function AccountForm({ type }: { type: "user" | "company" }) {
 
           <div className="fixed bottom-0 left-0 right-0 p-4">
             <Button type="submit" className="w-full">
-              인증하기
+              다음
             </Button>
           </div>
         </form>

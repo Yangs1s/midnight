@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { Label } from "@/components/ui/label";
 import ChangeIcon from "@/app/(auth)/signup/_components/change-icon";
+import Link from "next/link";
 
 const profileSchema = z.object({
   nickname: z
@@ -73,16 +74,19 @@ export default function ProfileSettings() {
   };
 
   return (
-    <div className="px-5">
-      <header className="py-4 flex items-center gap-4">
-        <button className="p-1">
-          <ArrowLeft className="w-6 h-6" />
-        </button>
-        <h1 className="text-lg font-medium">프로필 설정</h1>
-      </header>
+    <div className="bg-[#1b1b1e] text-white p-4">
+      <div className="mb-8">
+        <Link
+          href="/signup?type=user&step=1"
+          className="inline-flex items-center text-white"
+        >
+          <ArrowLeft className="w-6 h-6 mr-2" />
+          프로필 설정
+        </Link>
+      </div>
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="px-5">
+        <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex-1">
             <div className="space-y-4 mb-12">
               <h2 className="text-2xl font-bold leading-[32px]">
@@ -135,7 +139,7 @@ export default function ProfileSettings() {
                     </button>
                   </DrawerTrigger>
                   <DrawerContent className="p-0 bg-[#26252a] border-none">
-                    <div className="p-4">
+                    <div className="px-4 pt-6 pb-16">
                       <h3 className="text-lg font-semibold mb-4">
                         프로필 사진 업로드
                       </h3>

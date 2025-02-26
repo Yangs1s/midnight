@@ -50,7 +50,7 @@ export default function CompanyAccountForm() {
       </Label>
       <FileItem className="mt-2" name="사업자등록증.jpg" size="1.2MB" />
       <button
-        className="mt-2 w-full bg-[#26252A] rounded-md h-[48px] flex items-center justify-center"
+        className="mt-2 w-full bg-[#26252A] rounded-md h-[48px] flex items-center justify-center gap-2"
         onClick={() => setIsDrawerOpen(true)}
       >
         사업자등록증 업로드
@@ -116,12 +116,12 @@ function AlertBox({ color, text }: { color: "red" | "violet"; text: string }) {
   return (
     <div
       className={cn(
-        "flex items-center gap-3 bg-[#985CFF26] p-4 rounded-sm mt-4",
+        "flex items-center gap-3 bg-[#985CFF26] py-2 px-4 rounded-sm mt-4",
         color === "red" ? "bg-[#FF5C5C26]" : "bg-[#985CFF26]"
       )}
     >
       {/*<Info className="w-10 h-10" />*/}
-      <p className="text-sm text-white">{text}</p>
+      <p className="text-[13px] text-white">{text}</p>
     </div>
   );
 }

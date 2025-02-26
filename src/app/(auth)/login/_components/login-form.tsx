@@ -25,9 +25,10 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 
 interface LoginFormProps {
   onSubmit: (data: LoginFormValues) => void;
+  type: "normal" | "business";
 }
 
-export function LoginForm({ onSubmit }: LoginFormProps) {
+export function LoginForm({ onSubmit, type }: LoginFormProps) {
   const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<LoginFormValues>({
@@ -46,6 +47,29 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        {type === "normal" && (
+          <FormField
+            control={form.control}
+            name="autoLogin"
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-center space-x-3 space-y-0">
+                <FormControl>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                    className="border-[#999999] data-[state=checked]:bg-primary"
+                  />
+                </FormControl>
+                <div className="space-y-1 leading-none">
+                  <FormLabel className="text-sm text-[#999999]">
+                    자동 로그인
+                  </FormLabel>
+                </div>
+              </FormItem>
+            )}
+          />
+        )}
+
         <FormField
           control={form.control}
           name="username"
@@ -102,26 +126,28 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
           로그인
         </Button>
 
-        <FormField
-          control={form.control}
-          name="autoLogin"
-          render={({ field }) => (
-            <FormItem className="flex flex-row items-center space-x-3 space-y-0">
-              <FormControl>
-                <Checkbox
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                  className="border-[#999999] data-[state=checked]:bg-primary"
-                />
-              </FormControl>
-              <div className="space-y-1 leading-none">
-                <FormLabel className="text-sm text-[#999999]">
-                  자동 로그인
-                </FormLabel>
-              </div>
-            </FormItem>
-          )}
-        />
+        {type === "business" && (
+          <FormField
+            control={form.control}
+            name="autoLogin"
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-center space-x-3 space-y-0">
+                <FormControl>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                    className="border-[#999999] data-[state=checked]:bg-primary"
+                  />
+                </FormControl>
+                <div className="space-y-1 leading-none">
+                  <FormLabel className="text-sm text-[#999999]">
+                    자동 로그인
+                  </FormLabel>
+                </div>
+              </FormItem>
+            )}
+          />
+        )}
       </form>
     </Form>
   );

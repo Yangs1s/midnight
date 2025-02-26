@@ -120,7 +120,7 @@ export default function CompanyProfileSetting() {
                     </button>
                   </DrawerTrigger>
                   <DrawerContent className="p-0 bg-[#26252a] border-none">
-                    <div className="p-4">
+                    <div className="px-4 pt-6 pb-16">
                       <h3 className="text-lg font-semibold mb-4">
                         프로필 사진 업로드
                       </h3>
