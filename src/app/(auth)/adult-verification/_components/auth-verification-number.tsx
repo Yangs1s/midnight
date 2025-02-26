@@ -22,7 +22,7 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-export default function AuthVerificationNumber() {
+export default function AuthVerificationNumber({type}: {type: 'user' | 'company'}) {
   const router = useRouter();
 
   const form = useForm<FormValues>({
@@ -34,7 +34,7 @@ export default function AuthVerificationNumber() {
 
   const onSubmit = async (data: FormValues) => {
     console.log("Form data:", data);
-    router.push("/signup?type=user&step=1");
+    router.push(`/signup?type=${type}&step=1`);
   };
 
   return (

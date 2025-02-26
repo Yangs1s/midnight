@@ -3,7 +3,7 @@ import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
 
-export default function AdultVerificationNotice() {
+export default function AdultVerificationNotice({type}: {type: 'user' | 'company'}) {
   const router = useRouter();
   return (
     <div className="px-4">
@@ -37,7 +37,7 @@ export default function AdultVerificationNotice() {
           </Link>
           <Button
             className="w-full bg-primary hover:bg-primary/90 h-14 text-white"
-            onClick={() => router.push("/adult-verification?step=2")}
+            onClick={() => router.push(`/adult-verification?type=${type}&step=2`)}
           >
             성인 인증하기
           </Button>

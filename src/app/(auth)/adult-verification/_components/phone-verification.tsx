@@ -47,7 +47,7 @@ interface TermsData {
   [key: string]: boolean;
 }
 
-export default function PhoneVerification() {
+export default function PhoneVerification({type}: {type: 'user' | 'company'}) {
   const router = useRouter();
   const [isCarrierOpen, setIsCarrierOpen] = useState(false);
   const [isVerificationOpen, setIsVerificationOpen] = useState(false);
@@ -72,7 +72,7 @@ export default function PhoneVerification() {
   const handleVerificationTermsSubmit = (termsData: TermsData) => {
     console.log("Combined data:", { ...form.getValues(), terms: termsData });
     setIsVerificationOpen(false);
-    router.push("/adult-verification?step=3");
+    router.push(`/adult-verification?type=${type}&step=3`);
   };
 
   return (

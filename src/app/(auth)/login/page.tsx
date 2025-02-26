@@ -66,7 +66,7 @@ export default function LoginPage() {
         />
 
         <div className="flex justify-center space-x-4 text-sm text-[#999999] mt-16">
-          <a href="/non-member" className="hover:text-white">
+          <a href="/signup?type=anon" className="hover:text-white">
             비회원 입장
           </a>
           <span>|</span>
@@ -74,7 +74,7 @@ export default function LoginPage() {
             회원가입
           </button>
           <span>|</span>
-          <a href="/#" className="hover:text-white">
+          <a href="#" className="hover:text-white">
             계정 정보 찾기
           </a>
         </div>

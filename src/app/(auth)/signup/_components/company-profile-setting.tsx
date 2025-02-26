@@ -31,7 +31,9 @@ type ProfileFormValues = z.infer<typeof profileSchema>;
 
 export default function CompanyProfileSetting() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>(
+    "/base-profile.png"
+  );
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
@@ -80,7 +82,7 @@ export default function CompanyProfileSetting() {
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex-1">
             <div className="space-y-4 mb-12">
-              <h2 className="text-2xl font-bold leading-relaxed">
+              <h2 className="text-2xl font-bold leading-[32px]">
                 나를 표현할 수 있는
                 <br />
                 프로필 이미지와 닉네임을
@@ -89,13 +91,11 @@ export default function CompanyProfileSetting() {
               </h2>
             </div>
 
-            <div className="flex justify-between gap-4 mb-12">
+            <div className="flex justify-between items-center gap-4 mb-10">
               <div>
-                <div>
-                  <p className="text-[#999999] text-xs mb-6">
-                    서비스 활동 시 사용될 프로필입니다.
-                  </p>
-                </div>
+                <p className="text-[#999999] text-xs">
+                  서비스 활동 시 사용될 프로필입니다.
+                </p>
               </div>
               <div className="relative">
                 <div
@@ -107,8 +107,8 @@ export default function CompanyProfileSetting() {
                     <Image
                       src={selectedImage}
                       alt="Selected profile"
-                      width={96}
-                      height={96}
+                      width={72}
+                      height={72}
                       className="w-full h-full object-cover"
                     />
                   )}
@@ -172,7 +172,7 @@ export default function CompanyProfileSetting() {
 
           <div className="fixed bottom-0 left-0 right-0 p-4">
             <Button type="submit" className="w-full">
-              가입완료
+              다음
             </Button>
           </div>
         </form>

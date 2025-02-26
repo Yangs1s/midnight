@@ -23,7 +23,7 @@ export default function MembershipSelection({
           <DrawerTitle className="text-xl text-white text-start mb-4">가입 유형 선택</DrawerTitle>
         </DrawerHeader>
           <div className="flex justify-between items-center gap-4 mb-12">
-            <Link href="/adult-verification?step=1" className="w-1/2">
+            <Link href="/adult-verification?type=user&step=1" className="w-1/2">
               <Card
                   className="bg-[#302F36] border-0 hover:bg-[#302F36]/80 transition-colors text-center !rounded-[4px]"
               >
@@ -39,7 +39,7 @@ export default function MembershipSelection({
                 </div>
               </Card>
             </Link>
-            <Link href="/adult-verification?step=1" className="w-1/2 h-[96px]">
+            <Link href="/adult-verification?type=company&step=1" className="w-1/2 h-[96px]">
               <Card
                   className="bg-[#302F36] border-0 hover:bg-[#302F36]/80 transition-colors text-center !rounded-[4px]"
               >
