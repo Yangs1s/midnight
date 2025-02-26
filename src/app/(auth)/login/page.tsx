@@ -29,7 +29,7 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#1b1b1e] text-white p-4">
+    <div className="w-full h-dvh bg-[#1b1b1e] text-white p-4">
       <div className="flex flex-col mb-8">
         <button type="button" className="mb-4" onClick={() => router.push("/")}>
           <ArrowLeft className="h-6 w-6" />
@@ -137,6 +137,6 @@ export default function LoginPage() {
         )}
       </div>
       <MembershipSelection open={isDrawerOpen} onOpenChange={setIsDrawerOpen} />
-    </main>
+    </div>
   );
 }

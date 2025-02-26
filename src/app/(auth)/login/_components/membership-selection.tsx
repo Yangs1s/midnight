@@ -56,11 +56,11 @@ export default function MembershipSelection({
               </Card>
             </Link>
           </div>
-          <button
-              type="button"
-              className="w-[130px] h-[6px] bg-white self-center rounded-full"
-              onClick={() => onOpenChange(false)}
-          />
+          {/*<button*/}
+          {/*    type="button"*/}
+          {/*    className="w-[130px] h-[6px] bg-white self-center rounded-full"*/}
+          {/*    onClick={() => onOpenChange(false)}*/}
+          {/*/>*/}
       </DrawerContent>
     </Drawer>
 );

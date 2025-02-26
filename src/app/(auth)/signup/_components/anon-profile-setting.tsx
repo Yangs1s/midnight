@@ -16,6 +16,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import React from "react";
 
 const profileSchema = z.object({
   nickname: z
@@ -47,13 +49,13 @@ export default function AnonProfileSetting() {
   };
 
   return (
-    <div className="px-5">
-      <header className="py-4 flex items-center gap-4">
-        <button className="p-1">
-          <ArrowLeft className="w-6 h-6" />
-        </button>
-        <h1 className="text-lg font-medium">프로필 닉네임 설정</h1>
-      </header>
+    <div className="p-4 h-dvh">
+      <div className="mb-8">
+        <Link href="/login" className="inline-flex items-center text-white">
+          <ArrowLeft className="w-6 h-6 mr-4" />
+          <span className="text-lg">프로필 닉네임 설정</span>
+        </Link>
+      </div>
 
       <div className="space-y-4 mt-8 mb-12">
         <h2 className="text-2xl font-bold leading-[32px]">
@@ -95,7 +97,7 @@ export default function AnonProfileSetting() {
             <ChangeIcon />
           </button>
 
-          <div className="fixed bottom-0 left-0 right-0 p-4">
+          <div className="fixed left-1/2 -translate-x-1/2 w-full min-w-[320px] max-w-[470px] bottom-0 p-4">
             <Button type="submit" className="w-full">
               다음
             </Button>

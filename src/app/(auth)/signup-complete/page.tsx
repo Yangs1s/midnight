@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Zap } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 export default function SignupComplete() {
   const router = useRouter();
@@ -25,7 +24,7 @@ export default function SignupComplete() {
   }, [router]);
 
   return (
-    <div className="min-h-screen bg-[#1b1b1e] flex flex-col items-center justify-center px-4">
+    <div className="h-dvh bg-[#1b1b1e] flex flex-col items-center justify-center px-4">
       <div className="flex flex-col items-center gap-6 mb-12">
         <div className="w-20 h-20 rounded-full bg-[#26252a] flex items-center justify-center">
           <Zap className="w-8 h-8 text-[#985cff]" />

@@ -123,7 +123,7 @@ export default function TermsAgreement({
               </div>
             ))}
           </div>
-          <div className="fixed bottom-0 left-0 right-0 p-4 bg-[#26252A]">
+          <div className="fixed left-1/2 -translate-x-1/2 w-full min-w-[320px] max-w-[470px] bottom-0 p-4 bg-[#26252A]">
             <div className="flex gap-3">
               <Button
                 variant="outline"

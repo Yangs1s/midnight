@@ -3,7 +3,7 @@
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeft, EyeOff, Eye } from "lucide-react";
-import { useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
@@ -80,11 +80,11 @@ export default function AccountForm({ type }: { type: "user" | "company" }) {
   const isValidConfirmPassword = confirmPassword && !errors.confirmPassword;
 
   return (
-    <div className="bg-[#1b1b1e] text-white p-4">
+    <div className="h-dvh bg-[#1b1b1e] text-white p-4">
       <div className="mb-8">
         <Link href="/login" className="inline-flex items-center text-white">
-          <ArrowLeft className="w-6 h-6 mr-2" />
-          회원가입
+          <ArrowLeft className="w-6 h-6 mr-4" />
+          <span className="text-lg">회원가입</span>
         </Link>
       </div>
 
@@ -198,7 +198,7 @@ export default function AccountForm({ type }: { type: "user" | "company" }) {
             )}
           </div>
 
-          <div className="fixed bottom-0 left-0 right-0 p-4">
+          <div className="fixed left-1/2 -translate-x-1/2 w-full min-w-[320px] max-w-[470px] bottom-0 p-4">
             <Button type="submit" className="w-full">
               다음
             </Button>

@@ -1,12 +1,9 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowLeft, File, Info, Upload, X } from "lucide-react";
-import { useRef, useState } from "react";
+import { ArrowLeft, File, Upload, X } from "lucide-react";
+import React, { useRef, useState } from "react";
 import { Drawer, DrawerContent } from "@/components/ui/drawer";
-import { Camera } from "lucide-react";
-import { ImageIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
@@ -29,11 +26,11 @@ export default function CompanyAccountForm() {
   }
 
   return (
-    <div className="bg-[#1b1b1e] text-white p-4">
+    <div className="h-dvh bg-[#1b1b1e] text-white p-4">
       <div className="mb-8">
         <Link href="/login" className="inline-flex items-center text-white">
-          <ArrowLeft className="w-6 h-6 mr-2" />
-          사업자 회원가입
+          <ArrowLeft className="w-6 h-6 mr-4" />
+          <span className="text-lg">사업자 회원가입</span>
         </Link>
       </div>
 
@@ -103,7 +100,7 @@ export default function CompanyAccountForm() {
         className="hidden"
       />
 
-      <div className="fixed bottom-0 left-0 right-0 p-4">
+      <div className="fixed left-1/2 -translate-x-1/2 w-full min-w-[320px] max-w-[470px] bottom-0 p-4">
         <Button type="submit" className="w-full" onClick={handleClick}>
           다음
         </Button>

@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowLeft, Camera, ImageIcon } from "lucide-react";
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import Image from "next/image";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { useForm } from "react-hook-form";
@@ -74,14 +74,14 @@ export default function ProfileSettings() {
   };
 
   return (
-    <div className="bg-[#1b1b1e] text-white p-4">
+    <div className="h-dvh bg-[#1b1b1e] text-white p-4">
       <div className="mb-8">
         <Link
           href="/signup?type=user&step=1"
           className="inline-flex items-center text-white"
         >
-          <ArrowLeft className="w-6 h-6 mr-2" />
-          프로필 설정
+          <ArrowLeft className="w-6 h-6 mr-4" />
+          <span className="text-lg">프로필 설정</span>
         </Link>
       </div>
 
@@ -197,7 +197,7 @@ export default function ProfileSettings() {
             {/*</button>*/}
           </div>
 
-          <div className="fixed bottom-0 left-0 right-0 p-4">
+          <div className="fixed left-1/2 -translate-x-1/2 w-full min-w-[320px] max-w-[470px] bottom-0 p-4">
             <Button type="submit" className="w-full">
               다음
             </Button>

@@ -42,8 +42,8 @@ export default function AuthVerificationNumber({
   };
 
   return (
-    <div className="min-h-screen text-white">
-      <div className="pt-4 pb-8">
+    <div className="text-white">
+      <div className="pb-8">
         <Link
           href="/adult-verification?step=2"
           className="inline-flex items-center"
@@ -99,7 +99,7 @@ export default function AuthVerificationNumber({
               </span>
             </p>
 
-            <div className="fixed bottom-0 left-0 right-0 p-4">
+            <div className="fixed left-1/2 -translate-x-1/2 w-full min-w-[320px] max-w-[470px] bottom-0 p-4">
               <Button type="submit" className="w-full">
                 다음
               </Button>
