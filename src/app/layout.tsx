@@ -1,26 +1,26 @@
-import type { Metadata } from "next";
+import type {Metadata} from "next";
 import "@/styles/globals.css";
-import { ThemeProviders } from "@/components/provider/theme-provider";
-import { Toaster } from "sonner";
+import {ThemeProviders} from "@/components/provider/theme-provider";
+import {Toaster} from "sonner";
 
 export const metadata: Metadata = {
-  title: "Midnight Terrace",
-  description: "Midnight Terrace",
+    title: "Midnight Terrace",
+    description: "Midnight Terrace",
 };
 
 export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
+                                       children,
+                                   }: {
+    children: React.ReactNode;
 }) {
-  return (
-    <html lang="ko">
-      <body className="min-h-screen bg-[#1b1b1e] text-white">
+    return (
+        <html lang="ko">
+        <body className="min-h-screen bg-[#1f1f1f] text-white mx-auto">
         <ThemeProviders>
-          <Toaster position="bottom-center" richColors />
-          <main>{children}</main>
+            <Toaster position="bottom-center" richColors/>
+            <main className={'min-w-[320px] max-w-[470px] bg-[#1b1b1e]'}> {children}</main>
         </ThemeProviders>
-      </body>
-    </html>
-  );
+        </body>
+        </html>
+    );
 }

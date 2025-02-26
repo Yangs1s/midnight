@@ -48,7 +48,7 @@ const ChatBody = () => {
     const [isReply, setIsReply] = React.useState(false);
     return (
         <div
-            className={'top-36 h-screen mt-8  absolute w-full '}>
+            className={'min-w-[320px] max-w-[470px] top-36 h-screen mt-8  absolute w-full '}>
             <div className={'flex text-color relative opacity-30 justify-center my-6'}>
                 <p className={'bg-[#1b1b1e] px-4 z-10 text-[12px]'}>2024년 09월 30일(월)</p>
                 <div className={'h-[1px] bg-white w-full absolute top-[7px] opacity-30'}>&nbsp;</div>

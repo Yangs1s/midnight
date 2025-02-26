@@ -1,9 +1,7 @@
 'use client'
 import React, {useRef, useState} from 'react';
 import Image from "next/image";
-import {Sheet} from "@/components/ui/sheet";
-import {Drawer, DrawerContent} from "@/components/ui/drawer";
-import {Camera, ImageIcon} from "lucide-react";
+
 
 const ChatInput = ({search, isReply}: { isReply: boolean, search: boolean }) => {
     const [message, setMessage] = useState('');
@@ -18,7 +16,7 @@ const ChatInput = ({search, isReply}: { isReply: boolean, search: boolean }) => 
             textareaRef.current.style.height = textareaRef.current.scrollHeight + "px";
         }
     };
-
+    console.log(openSheet)
 
     const toggleEmojiPicker = () => {
         setShowEmojiPicker(!showEmojiPicker);
@@ -30,7 +28,8 @@ const ChatInput = ({search, isReply}: { isReply: boolean, search: boolean }) => 
     };
 
     return (
-        <div className={`fixed ${footerContent ? 'min-h-[240px]' : 'h-auto'}  bottom-0 bg-[#181818]  w-full `}>
+        <div
+            className={`fixed ${footerContent ? 'min-h-[240px]' : 'h-auto'}  bottom-0 bg-[#181818]  min-w-[320px] max-w-[470px] w-full `}>
             <div className={'px-4 pt-4 pb-2'}>
                 {
                     !search ? (
