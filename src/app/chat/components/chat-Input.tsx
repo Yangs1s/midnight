@@ -1,6 +1,7 @@
 'use client'
 import React, {useRef, useState} from 'react';
 import Image from "next/image";
+import ChangeNickName from "@/app/chat/components/change-nick-name";
 
 
 const ChatInput = ({search, isReply}: { isReply: boolean, search: boolean }) => {
@@ -30,10 +31,10 @@ const ChatInput = ({search, isReply}: { isReply: boolean, search: boolean }) => 
     return (
         <div
             className={`fixed ${footerContent ? 'min-h-[240px]' : 'h-auto'}  bottom-0 bg-[#181818]  min-w-[320px] max-w-[470px] w-full `}>
-            <div className={'px-4 pt-4 pb-2'}>
+            <div className={'px-4 pt-4 pb-3'}>
                 {
                     !search ? (
-                        <div className="flex gap-2 items-end">
+                        <div className="flex gap-2 justify-between items-end">
                             {/*컨텐츠 버튼*/}
                             <button className={'pb-1'}>
                                 <div>
@@ -42,6 +43,7 @@ const ChatInput = ({search, isReply}: { isReply: boolean, search: boolean }) => 
                                             <Image src={'/icon/reply.svg'} alt={'reply'} width={24} height={24}/> :
                                             <button className={'w-8 h-8 flex justify-center items-center'}
                                                     onClick={() => {
+                                                        setOpenSheet(-1)
                                                         setFooterContent(prev => !prev)
                                                     }}>
                                                 {
@@ -54,36 +56,68 @@ const ChatInput = ({search, isReply}: { isReply: boolean, search: boolean }) => 
                                     }
                                 </div>
                             </button>
-                            <div
-                                className="relative bg-[#2F2F2F] rounded-[32px] flex items-center w-full min-h-[32px] px-4 ">
-                                <div className={'w-full h-auto flex items-end'}>
-                            <textarea
-                                ref={textareaRef}
-                                className="box-border max-w-[200px] py-2 resize-none w-full !min-h-[0px] max-h-[120px] h-9
-                                      outline-none overflow-hidden placeholder:text-[13px] bg-transparent text-[13px] leading-normal  text-[#999999]"
-                                placeholder="조용한 크림파스타로 채팅 입력"
-                                value={message}
-                                onChange={handleInputChange}
-                            />
-                                </div>
-                                <button
-                                    onClick={toggleEmojiPicker}
-                                    className="absolute bottom-[6px] right-4 "
-                                >
-                                    <img src="/icon/smileIcon.svg" alt="스마일 이모지"/>
-                                </button>
-                                {showEmojiPicker && (
-                                    <div className="absolute bottom-full mb-2 bg-white p-2 rounded shadow">
-                                        <button onClick={() => addEmoji("😊")} className="text-xl">😊</button>
-                                        <button onClick={() => addEmoji("😂")} className="text-xl ml-2">😂</button>
-                                        <button onClick={() => addEmoji("😍")} className="text-xl ml-2">😍</button>
-                                    </div>
-                                )}
-                            </div>
+                            {
+                                openSheet === -1 ? (
+                                        <>
+                                            <div
+                                                className="relative bg-[#2F2F2F] rounded-[32px] flex items-center w-full min-h-[32px] px-4 ">
+                                                <div className={'w-full h-auto flex items-end'}>
+                                                <textarea
+                                                    ref={textareaRef}
+                                                    className="box-border max-w-[200px] py-2 resize-none w-full !min-h-[0px] max-h-[120px] h-9
+                                          outline-none overflow-hidden placeholder:text-[13px] bg-transparent text-[13px] leading-normal  text-[#999999]"
+                                                    placeholder="조용한 크림파스타로 채팅 입력"
+                                                    value={message}
+                                                    onChange={handleInputChange}
+                                                />
+                                                    <button
+                                                        onClick={toggleEmojiPicker}
+                                                        className="absolute bottom-[6px] right-4 "
+                                                    >
+                                                        <img src="/icon/smileIcon.svg" alt="스마일 이모지"/>
+                                                    </button>
+                                                    {showEmojiPicker && (
+                                                        <div
+                                                            className="absolute bottom-full mb-2 bg-white p-2 rounded shadow">
+                                                            <button onClick={() => addEmoji("😊")}
+                                                                    className="text-xl">😊
+                                                            </button>
+                                                            <button onClick={() => addEmoji("😂")}
+                                                                    className="text-xl ml-2">😂
+                                                            </button>
+                                                            <button onClick={() => addEmoji("😍")}
+                                                                    className="text-xl ml-2">😍
+                                                            </button>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
+                                            <button className={'pb-1'}>
+                                                <Image width={32} height={32} src="/icon/send.svg" alt="전송 아이콘"/>
+                                            </button>
+                                        </>
+                                    ) :
+                                    openSheet === 0 ? (
+                                        <>
+                                            <div className={'pb-2'}>프로필선택</div>
+
+                                        </>
+                                    ) : openSheet === 1 ? (
+                                        <>
+                                            <div className={'pb-2'}>앨범</div>
+
+                                        </>
+                                    ) : <>
+                                        <div className={'pb-2'}>자주쓰는 문구</div>
+
+                                    </>
+                            }
+
                             {/*전송 버튼*/}
-                            <button className={'pb-1'}>
-                                <Image width={32} height={32} src="/icon/send.svg" alt="전송 아이콘"/>
-                            </button>
+                            {
+                                openSheet !== -1 &&
+                                <div className={'w-[24px]'}>&nbsp;</div>
+                            }
                         </div>
 
                     ) : (
@@ -98,7 +132,7 @@ const ChatInput = ({search, isReply}: { isReply: boolean, search: boolean }) => 
                 }
             </div>
             {
-                footerContent && <div className={'min-h-[280px] h-full '}>
+                footerContent && openSheet === -1 && <div className={'min-h-[280px] h-full '}>
                     <div
                         className={' border-t-[1px] border-t-white/30  h-full'}>
                         <div className={'px-4 flex items-center py-3 justify-between w-full'}>
@@ -112,17 +146,24 @@ const ChatInput = ({search, isReply}: { isReply: boolean, search: boolean }) => 
                                 <Image width={24} height={24} src="/icon/userIcon.svg" alt="전송 아이콘"/>
                                 <p className={'text-[14px]'}>닉네임 변경</p>
                             </li>
-                            <li className={'flex flex-col items-center gap-2 '}>
+                            <li className={'flex flex-col items-center gap-2 '} onClick={() => {
+                                setOpenSheet(1)
+                            }}>
                                 <Image width={24} height={24} src="/icon/picture.svg" alt="전송 아이콘"/>
                                 <p className={'text-[14px]'}>사진첨부</p>
                             </li>
-                            <li className={'flex flex-col items-center gap-2 '}>
+                            <li className={'flex flex-col items-center gap-2 '} onClick={() => {
+                                setOpenSheet(2)
+                            }}>
                                 <Image width={24} height={24} src="/icon/pencil.svg" alt="전송 아이콘"/>
                                 <p className={'text-[14px]'}>자주쓰는 문구</p>
                             </li>
                         </ul>
                     </div>
                 </div>
+            }
+            {
+                openSheet === 0 && <ChangeNickName/>
             }
 
         </div>
