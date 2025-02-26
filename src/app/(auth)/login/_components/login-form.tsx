@@ -25,10 +25,9 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 
 interface LoginFormProps {
   onSubmit: (data: LoginFormValues) => void;
-  userType: "normal" | "business";
 }
 
-export function LoginForm({ onSubmit, userType }: LoginFormProps) {
+export function LoginForm({ onSubmit }: LoginFormProps) {
   const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<LoginFormValues>({
@@ -55,11 +54,7 @@ export function LoginForm({ onSubmit, userType }: LoginFormProps) {
               <FormControl>
                 <Input
                   {...field}
-                  placeholder={
-                    userType === "normal"
-                      ? "아이디를 입력해주세요"
-                      : "사업자 번호를 입력해주세요"
-                  }
+                  placeholder={"아이디를 입력해주세요"}
                   className="bg-[#26252a] border-none text-white placeholder:text-[#999999] h-12"
                 />
               </FormControl>
@@ -111,7 +106,7 @@ export function LoginForm({ onSubmit, userType }: LoginFormProps) {
           control={form.control}
           name="autoLogin"
           render={({ field }) => (
-            <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+            <FormItem className="flex flex-row items-center space-x-3 space-y-0">
               <FormControl>
                 <Checkbox
                   checked={field.value}
