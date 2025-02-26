@@ -9,7 +9,7 @@ function FriendIcon() {
       viewBox="0 0 28 28"
       fill="none"
     >
-      <g clip-path="url(#clip0_1_23795)">
+      <g clipPath="url(#clip0_1_23795)">
         <path
           fillRule="evenodd"
           clipRule="evenodd"

@@ -15,8 +15,8 @@ export function UserSectionList() {
       <Section
         title="고객센터"
         items={[
-          { label: "1:1 문의", href: "/board/customer?type=private" },
-          { label: "내 문의내역", href: "/board/customer?type=inquiry" },
+          { label: "1:1 문의", href: "/board/customer?type=inquiry" },
+          { label: "내 문의내역", href: "/board/customer?type=inquiry-log" },
           { label: "FAQ", href: "/board/customer?type=faq" },
           { label: "피드백 보내기", href: "/board/customer?type=feedback" },
         ]}
@@ -61,10 +61,10 @@ export function BusinessSectionList() {
       <Section
         title="고객센터"
         items={[
-          { label: "1:1 문의", href: "/mypage/setting" },
-          { label: "내 문의내역", href: "/mypage/setting" },
-          { label: "FAQ", href: "/mypage/setting" },
-          { label: "피드백 보내기", href: "/mypage/setting" },
+          { label: "1:1 문의", href: "/board/customer?type=inquiry" },
+          { label: "내 문의내역", href: "/board/customer?type=inquiry-log" },
+          { label: "FAQ", href: "/board/customer?type=faq" },
+          { label: "피드백 보내기", href: "/board/customer?type=feedback" },
         ]}
       />
 

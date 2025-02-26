@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import CustomerFooter from "@/app/(main)/board/customer/_components/customer-footer";
 
 interface Data {
   id: number;
@@ -58,7 +59,7 @@ export default function FaqList() {
     "rounded-full w-full data-[state=active]:bg-transparent data-[state=active]:text-white data-[state=active]:border-[1px] data-[state=active]:border-white data-[state=active]:relative data-[state=active]:top-[1px]";
   return (
     <div>
-      <Tabs defaultValue={type || "question"} className="w-full !ml-0">
+      <Tabs defaultValue={type || "question"} className="w-full !ml-0 mb-6">
         <TabsList className="w-full bg-transparent flex justify-start gap-2 !p-0">
           <TabsTrigger
             value="question"
@@ -118,6 +119,7 @@ export default function FaqList() {
           ))}
         </div>
       </Tabs>
+      <CustomerFooter />
     </div>
   );
 }

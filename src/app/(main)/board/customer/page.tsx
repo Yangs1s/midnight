@@ -10,10 +10,13 @@ import FaqList from "@/app/(main)/board/customer/_components/faq-list";
 import FaqSearch from "@/app/(main)/board/customer/_components/faq-search";
 import ChatConsultation from "@/components/container/header/chat-consultation";
 import FaqSearchLogs from "@/app/(main)/board/customer/_components/faq-search-logs";
+import InquiryForm from "@/app/(main)/board/customer/_components/inquiry-form";
+import InquiryList from "@/app/(main)/board/customer/_components/inquiry-list";
+import FeedbackForm from "@/app/(main)/board/customer/_components/feedback-form";
 
 type Props = {
   searchParams: {
-    type: "private" | "inquiry" | "faq" | "feedback";
+    type: "inquiry" | "inquiry-log" | "faq" | "feedback";
   };
 };
 
@@ -26,7 +29,7 @@ const CustomerPage = ({ searchParams }: Props) => {
   const [isSearchMode, setIsSearchMode] = useState(false);
 
   const handleTypeChange = (
-    type: "private" | "inquiry" | "faq" | "feedback"
+    type: "inquiry" | "inquiry-log" | "faq" | "feedback"
   ) => {
     router.push(`/board/customer?type=${type}`);
   };
@@ -57,16 +60,16 @@ const CustomerPage = ({ searchParams }: Props) => {
             FAQ
           </TabsTrigger>
           <TabsTrigger
-            value="private"
+            value="inquiry"
             className={triggerClassName}
-            onClick={() => handleTypeChange("private")}
+            onClick={() => handleTypeChange("inquiry")}
           >
             1:1문의
           </TabsTrigger>
           <TabsTrigger
-            value="inquiry"
+            value="inquiry-log"
             className={triggerClassName}
-            onClick={() => handleTypeChange("inquiry")}
+            onClick={() => handleTypeChange("inquiry-log")}
           >
             내 문의내역
           </TabsTrigger>
@@ -85,14 +88,14 @@ const CustomerPage = ({ searchParams }: Props) => {
             {isSearchMode ? <FaqSearchLogs /> : <FaqList />}
           </>
         </TabsContent>
-        <TabsContent value="private">
-          <ContentTalk />
-        </TabsContent>
         <TabsContent value="inquiry">
-          <BambooForestTalk />
+          <InquiryForm />
+        </TabsContent>
+        <TabsContent value="inquiry-log">
+          <InquiryList />
         </TabsContent>
         <TabsContent value="feedback">
-          <BambooForestTalk />
+          <FeedbackForm />
         </TabsContent>
       </Tabs>
     </div>

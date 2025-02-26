@@ -9,7 +9,7 @@ export default function HomeWidgetIcon() {
       viewBox="0 0 28 28"
       fill="none"
     >
-      <g clip-path="url(#clip0_1_23786)">
+      <g clipPath="url(#clip0_1_23786)">
         <path
           fillRule="evenodd"
           clipRule="evenodd"
