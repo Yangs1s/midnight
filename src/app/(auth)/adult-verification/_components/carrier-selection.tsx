@@ -27,7 +27,7 @@ export default function CarrierSelection({
         <DrawerHeader>
           <DrawerTitle className="text-white text-lg">통신사 선택</DrawerTitle>
         </DrawerHeader>
-        <div className="p-4">
+        <div className="w-full p-4">
           <RadioGroup
             onValueChange={onSelect}
             className="space-y-2"

@@ -40,7 +40,7 @@ export default function AdultVerificationNotice({
             </Button>
           </Link>
           <Button
-            className="w-full bg-primary hover:bg-primary/90 h-14 text-white"
+            className="w-full bg-primary hover:bg-[#985CFF]/80 h-14 text-white"
             onClick={() =>
               router.push(`/adult-verification?type=${type}&step=2`)
             }
