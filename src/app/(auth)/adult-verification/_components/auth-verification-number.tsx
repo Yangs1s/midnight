@@ -22,7 +22,11 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-export default function AuthVerificationNumber() {
+export default function AuthVerificationNumber({
+  type,
+}: {
+  type: "user" | "company";
+}) {
   const router = useRouter();
 
   const form = useForm<FormValues>({
@@ -34,18 +38,18 @@ export default function AuthVerificationNumber() {
 
   const onSubmit = async (data: FormValues) => {
     console.log("Form data:", data);
-    router.push("/signup?type=user&step=1");
+    router.push(`/signup?type=${type}&step=1`);
   };
 
   return (
-    <div className="min-h-screen text-white">
-      <div className="pt-4 pb-8">
+    <div className="text-white">
+      <div className="pb-8">
         <Link
           href="/adult-verification?step=2"
           className="inline-flex items-center"
         >
-          <ArrowLeft className="w-6 h-6 mr-2" />
-          <span className="text-lg">휴대폰 본인인증</span>
+          <ArrowLeft className="w-6 h-6 mr-4" />
+          <span className="text-lg">회원가입</span>
         </Link>
       </div>
 
@@ -95,7 +99,7 @@ export default function AuthVerificationNumber() {
               </span>
             </p>
 
-            <div className="fixed bottom-0 left-0 right-0 p-4">
+            <div className="fixed left-1/2 -translate-x-1/2 w-full min-w-[320px] max-w-[470px] bottom-0 p-4">
               <Button type="submit" className="w-full">
                 다음
               </Button>

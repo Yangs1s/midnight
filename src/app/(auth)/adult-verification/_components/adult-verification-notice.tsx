@@ -1,16 +1,20 @@
-import {ArrowLeft} from "lucide-react";
-import {Button} from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 
-export default function AdultVerificationNotice() {
+export default function AdultVerificationNotice({
+  type,
+}: {
+  type: "user" | "company";
+}) {
   const router = useRouter();
   return (
-    <div className="px-4">
-      <div className="pt-4 pb-8">
+    <div>
+      <div className="pb-8">
         <Link href="/login" className="inline-flex items-center">
           <ArrowLeft className="w-6 h-6 mr-4" />
-          <span className="text-lg font-bold">회원가입</span>
+          <span className="text-lg font-[600]">회원가입</span>
         </Link>
       </div>
 
@@ -26,7 +30,7 @@ export default function AdultVerificationNotice() {
           이용할 수 없습니다.
         </p>
 
-        <div className="fixed bottom-0 left-0 right-0 p-4 space-y-3">
+        <div className="fixed left-1/2 -translate-x-1/2 w-full min-w-[320px] max-w-[470px] bottom-0 p-4 space-y-3">
           <Link href="/login">
             <Button
               variant="outline"
@@ -37,7 +41,9 @@ export default function AdultVerificationNotice() {
           </Link>
           <Button
             className="w-full bg-primary hover:bg-primary/90 h-14 text-white"
-            onClick={() => router.push("/adult-verification?step=2")}
+            onClick={() =>
+              router.push(`/adult-verification?type=${type}&step=2`)
+            }
           >
             성인 인증하기
           </Button>
