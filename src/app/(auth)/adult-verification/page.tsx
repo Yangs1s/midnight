@@ -8,11 +8,13 @@ import AuthVerificationNumber from "@/app/(auth)/adult-verification/_components/
 
 type Props = {
   searchParams: {
+    type: 'user' | 'company';
     step: string;
   };
 };
 
 export default function VerificationPage({ searchParams }: Props) {
+  const type = searchParams.type;
   const step = searchParams.step;
 
   useEffect(() => {
@@ -32,11 +34,11 @@ export default function VerificationPage({ searchParams }: Props) {
   return (
     <div>
       {step === "1" ? (
-        <AdultVerificationNotice />
+        <AdultVerificationNotice type={type}/>
       ) : step === "2" ? (
-        <PhoneVerification />
+        <PhoneVerification type={type}/>
       ) : step === "3" ? (
-        <AuthVerificationNumber />
+        <AuthVerificationNumber type={type}/>
       ) : (
         <GoToLoginHome />
       )}

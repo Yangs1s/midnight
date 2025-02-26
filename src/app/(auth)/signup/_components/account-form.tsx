@@ -34,7 +34,7 @@ export const accountSchema = z
 
 export type AccountFormType = z.infer<typeof accountSchema>;
 
-export default function AccountForm() {
+export default function AccountForm({ type }: { type: "user" | "company" }) {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -72,7 +72,7 @@ export default function AccountForm() {
         password: data.password,
       })
     );
-    router.push("/signup?type=user&step=2");
+    router.push(`/signup?type=${type}&step=2`);
   };
 
   const isValidUserId = userId && !errors.userId;
@@ -80,17 +80,17 @@ export default function AccountForm() {
   const isValidConfirmPassword = confirmPassword && !errors.confirmPassword;
 
   return (
-    <div className="min-h-screen bg-[#1b1b1e] text-white p-4">
+    <div className="bg-[#1b1b1e] text-white p-4">
       <div className="mb-8">
-        <Link href="/" className="inline-flex items-center text-white">
+        <Link href="/login" className="inline-flex items-center text-white">
           <ArrowLeft className="w-6 h-6 mr-2" />
           회원가입
         </Link>
       </div>
 
-      <div className="max-w-md mx-auto">
-        <h1 className="text-2xl font-bold mb-6">계정 정보 입력</h1>
-        <p className="text-gray-400 mb-8">
+      <div>
+        <h1 className="text-2xl font-bold mb-2">계정 정보 입력</h1>
+        <p className="text-gray-400 mb-12 text-[14px]">
           원활한 서비스 진행을 위해 아래 절차를 수행해주세요.
         </p>
 
@@ -200,7 +200,7 @@ export default function AccountForm() {
 
           <div className="fixed bottom-0 left-0 right-0 p-4">
             <Button type="submit" className="w-full">
-              인증하기
+              다음
             </Button>
           </div>
         </form>

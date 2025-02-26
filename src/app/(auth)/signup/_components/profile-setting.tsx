@@ -1,7 +1,7 @@
 "use client";
 
-import { ArrowLeft, Camera, Link2, ImageIcon } from "lucide-react";
-import { useState, useRef } from "react";
+import { ArrowLeft, Camera, ImageIcon } from "lucide-react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { useForm } from "react-hook-form";
@@ -18,6 +18,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { Label } from "@/components/ui/label";
+import ChangeIcon from "@/app/(auth)/signup/_components/change-icon";
+import Link from "next/link";
 
 const profileSchema = z.object({
   nickname: z
@@ -42,6 +44,10 @@ export default function ProfileSettings() {
       profileImage: "",
     },
   });
+
+  const getRandomProfile = () => {
+    setSelectedImage("/random-profile.png");
+  };
 
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -68,19 +74,22 @@ export default function ProfileSettings() {
   };
 
   return (
-    <div className="px-5">
-      <header className="py-4 flex items-center gap-4">
-        <button className="p-1">
-          <ArrowLeft className="w-6 h-6" />
-        </button>
-        <h1 className="text-lg font-medium">프로필 설정</h1>
-      </header>
+    <div className="bg-[#1b1b1e] text-white p-4">
+      <div className="mb-8">
+        <Link
+          href="/signup?type=user&step=1"
+          className="inline-flex items-center text-white"
+        >
+          <ArrowLeft className="w-6 h-6 mr-2" />
+          프로필 설정
+        </Link>
+      </div>
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="px-5">
+        <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex-1">
             <div className="space-y-4 mb-12">
-              <h2 className="text-2xl font-bold leading-relaxed">
+              <h2 className="text-2xl font-bold leading-[32px]">
                 나를 표현할 수 있는
                 <br />
                 프로필 이미지와 닉네임을
@@ -89,17 +98,21 @@ export default function ProfileSettings() {
               </h2>
             </div>
 
-            <div className="flex justify-between gap-4 mb-12">
-              <div>
+            <div className="flex justify-between gap-4 mb-6">
+              <div className="self-end">
                 <div>
                   <p className="text-[#999999] text-xs mb-6">
                     서비스 활동 시 사용될 프로필입니다.
                   </p>
                 </div>
                 <div>
-                  <button className="flex items-center gap-2 px-4 py-2 bg-[#26252a] rounded-full">
-                    <Link2 className="w-4 h-4" />
-                    <span className="text-sm">랜덤 프로필 사진</span>
+                  <button
+                    type="button"
+                    className="flex items-center gap-2 px-4 py-2 bg-[#985cff]/15 rounded-full"
+                    onClick={getRandomProfile}
+                  >
+                    <span className="text-sm">랜덤 프로필</span>
+                    <ChangeIcon />
                   </button>
                 </div>
               </div>
@@ -113,8 +126,8 @@ export default function ProfileSettings() {
                     <Image
                       src={selectedImage}
                       alt="Selected profile"
-                      width={96}
-                      height={96}
+                      width={72}
+                      height={72}
                       className="w-full h-full object-cover"
                     />
                   )}
@@ -126,7 +139,7 @@ export default function ProfileSettings() {
                     </button>
                   </DrawerTrigger>
                   <DrawerContent className="p-0 bg-[#26252a] border-none">
-                    <div className="p-4">
+                    <div className="px-4 pt-6 pb-16">
                       <h3 className="text-lg font-semibold mb-4">
                         프로필 사진 업로드
                       </h3>
@@ -175,18 +188,18 @@ export default function ProfileSettings() {
               )}
             />
 
-            <button
-              type="button"
-              className="flex items-center gap-2 px-4 py-2 bg-[#26252a] rounded-full mx-auto mt-4"
-            >
-              <Link2 className="w-4 h-4" />
-              <span className="text-sm">닉네임 랜덤 배정</span>
-            </button>
+            {/*<button*/}
+            {/*  type="button"*/}
+            {/*  className="flex items-center gap-2 px-4 py-2 bg-[#26252a] rounded-full mx-auto mt-4"*/}
+            {/*>*/}
+            {/*  <Link2 className="w-4 h-4" />*/}
+            {/*  <span className="text-sm">닉네임 랜덤 배정</span>*/}
+            {/*</button>*/}
           </div>
 
           <div className="fixed bottom-0 left-0 right-0 p-4">
             <Button type="submit" className="w-full">
-              가입완료
+              다음
             </Button>
           </div>
         </form>

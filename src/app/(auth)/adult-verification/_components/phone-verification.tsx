@@ -47,7 +47,11 @@ interface TermsData {
   [key: string]: boolean;
 }
 
-export default function PhoneVerification() {
+export default function PhoneVerification({
+  type,
+}: {
+  type: "user" | "company";
+}) {
   const router = useRouter();
   const [isCarrierOpen, setIsCarrierOpen] = useState(false);
   const [isVerificationOpen, setIsVerificationOpen] = useState(false);
@@ -72,7 +76,7 @@ export default function PhoneVerification() {
   const handleVerificationTermsSubmit = (termsData: TermsData) => {
     console.log("Combined data:", { ...form.getValues(), terms: termsData });
     setIsVerificationOpen(false);
-    router.push("/adult-verification?step=3");
+    router.push(`/adult-verification?type=${type}&step=3`);
   };
 
   return (
@@ -82,8 +86,8 @@ export default function PhoneVerification() {
           href="/adult-verification?step=1"
           className="inline-flex items-center"
         >
-          <ArrowLeft className="w-6 h-6 mr-2" />
-          <span className="text-lg">성인 인증하기</span>
+          <ArrowLeft className="w-6 h-6 mr-4" />
+          <span className="text-lg">회원가입</span>
         </Link>
       </div>
 
