@@ -29,7 +29,7 @@ export default function Page({params}: Props) {
     console.log(id);
 
     return (
-        <div className={'flex flex-col h-full'}>
+        <div className={'flex flex-col h-full min-w-[320px] max-w-[470px]'}>
             <ChatHeader
                 title={response.title}
                 description={response.description}

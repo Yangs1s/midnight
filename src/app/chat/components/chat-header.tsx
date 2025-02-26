@@ -35,8 +35,8 @@ export default function ChatHeader({
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <div>
-            <div className="fixed top-0 left-0 right-0 z-10">
+        <div className={''}>
+            <div className="min-w-[320px] max-w-[470px] fixed top-0 z-10">
                 <div
                     className={cn("h-[72px]", isSearchMode ? "bg-black" : "bg-[#1b1b1e]")}
                 >
