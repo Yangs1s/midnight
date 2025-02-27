@@ -1,4 +1,6 @@
 import { cn } from "@/lib/utils";
+import NewBadgeIcon from "@/app/(main)/mypage/_components/new-badge-icon";
+import { RightArrowIcon } from "@/app/(main)/mypage/_components/right-arrow-icon";
 
 interface NotificationProps {
   message: string;
@@ -15,24 +17,15 @@ export default function Notification({
     <a
       href={link}
       className={cn(
-        "flex items-center gap-2 px-4 py-3 bg-[#985CFF]/15 rounded-md text-xs text-white/80",
+        "flex items-center gap-2 p-4 bg-[#985CFF]/15 rounded-[4px] text-xs text-white/80 relative",
         className
       )}
     >
+      <div className="absolute -top-2 left-4">
+        <NewBadgeIcon />
+      </div>
       <span className="flex-1">{message}</span>
-      <svg
-        className="w-5 h-5 text-gray-400"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M9 5l7 7-7 7"
-        />
-      </svg>
+      <RightArrowIcon />
     </a>
   );
 }
