@@ -23,7 +23,7 @@ export default function CollapsibleChatList({
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
       <CollapsibleTrigger className="flex items-center justify-between w-full">
-        <p className="text-lg font-medium">{title}</p>
+        <p className="text-[16px] font-bold">{title}</p>
         <ChevronDown
           className={`w-5 h-5 transition-transform duration-200 ${
             isOpen ? "rotate-180" : ""

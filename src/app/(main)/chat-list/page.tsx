@@ -7,29 +7,29 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function ChatPage() {
   const triggerClassName =
-    "rounded-none w-20 data-[state=active]:bg-transparent data-[state=active]:text-white data-[state=active]:border-b-[1px] data-[state=active]:border-white data-[state=active]:relative data-[state=active]:top-[1px]";
+    "rounded-none w-16 data-[state=active]:bg-transparent data-[state=active]:text-white data-[state=active]:border-b-[3px] data-[state=active]:border-white data-[state=active]:relative data-[state=active]:top-[1px] text-[16px] text-[#A5A5A5]";
 
   return (
-    <div className="">
+    <div>
       <Tabs defaultValue="choiceTalk" className="w-full !ml-0">
         <TabsList className="w-full bg-transparent border-b border-[#26252a] flex justify-start gap-4 !p-0">
           <TabsTrigger value="choiceTalk" className={triggerClassName}>
             초이스톡
           </TabsTrigger>
-          <TabsTrigger value="contentTalk" className={triggerClassName}>
-            콘텐츠톡
-          </TabsTrigger>
+          {/*<TabsTrigger value="contentTalk" className={triggerClassName}>*/}
+          {/*  콘텐츠톡*/}
+          {/*</TabsTrigger>*/}
           <TabsTrigger value="bambooForestTalk" className={triggerClassName}>
-            대나무숲
+            데일리톡
           </TabsTrigger>
         </TabsList>
 
         <TabsContent value="choiceTalk">
           <ChoiceTalk />
         </TabsContent>
-        <TabsContent value="contentTalk">
-          <ContentTalk />
-        </TabsContent>
+        {/*<TabsContent value="contentTalk">*/}
+        {/*  <ContentTalk />*/}
+        {/*</TabsContent>*/}
         <TabsContent value="bambooForestTalk">
           <BambooForestTalk />
         </TabsContent>
