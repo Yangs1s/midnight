@@ -1,6 +1,6 @@
 "use client";
 
-import { Dot, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
 
@@ -11,6 +11,7 @@ interface ChoiceChatItemProps {
   title: string;
   location: string;
   description: string;
+  description2?: string;
   imageUrl?: string;
   defaultBookmarked?: boolean;
   onBookmarkClick?: () => void;
@@ -25,6 +26,7 @@ export default function ChoiceChatItem({
   title,
   location,
   description,
+  description2,
   imageUrl,
   defaultBookmarked = false,
   onBookmarkClick,
@@ -39,45 +41,54 @@ export default function ChoiceChatItem({
   }
 
   return (
-    <div className="grid grid-cols-[36px_1fr_36px] gap-4 py-4 border-b border-white/5">
+    <div className="grid grid-cols-[60px_1fr_36px] gap-2 py-4 border-b border-white/5 last:border-b-0">
       <div>
         {imageUrl ? (
           <Image
             src={imageUrl}
             alt="chat-item-image"
-            width={36}
-            height={36}
-            className="rounded-lg object-cover w-[36px] h-[36px]"
+            width={60}
+            height={60}
+            className="rounded-[8px] object-cover w-[60px] h-[60px] border border-[#464646]"
           />
         ) : (
-          <div className="bg-primary rounded-lg w-[36px] h-[36px]" />
+          <div className="bg-primary rounded-[8px] w-[60px] h-[60px] border border-[#464646]" />
         )}
       </div>
       <div onClick={onClick}>
         <div className="flex flex-col gap-[2px]">
-          <p className="flex items-center gap-1 text-xs text-muted-foreground">
-            <span className="text-primary">{type}</span>
-            <Dot className="w-4 h-4" />
+          <p className="flex items-center gap-1 text-xs text-white/60">
+            <span className="text-[#BB94FF]">{type}</span>
+            <span className="w-[3px] h-[3px] rounded-full bg-white/30" />
             <span className="text-white">{timeType}</span>{" "}
-            <span className="text-primary">{time}</span>
+            <span className="text-[#BB94FF]">{time}</span>
             <span className="text-white">기준</span>
           </p>
           <div className="flex items-center gap-1">
-            <p className="text-sm font-medium">{title}</p>
+            <p className="text-[15px] font-bold max-w-[65%] truncate">
+              {title}
+            </p>
             <div className="flex items-center gap-[2px]">
-              <p className="text-xs text-muted-foreground">{location}</p>
+              <p className="text-xs text-white/60">{location}</p>
               {isNew && (
                 <Image src="/icon/new.svg" alt="new" width={16} height={16} />
               )}
             </div>
           </div>
-          <p className="text-xs text-muted-foreground">{description}</p>
+          <div className="flex items-center gap-1">
+            <p className="flex justify-center items-center w-[12px] h-[12px] text-[6px] leading-3 rounded-full border border-white/60 bg-transparent">
+              E
+            </p>
+            <p className="text-[11px] text-white/60">
+              {description} {description2 && "/ " + description2}
+            </p>
+          </div>
         </div>
       </div>
-      <div className="col-span-1 flex items-center justify-center h-[36px] w-[36px]">
+      <div className="col-span-1 flex items-center justify-center h-full w-[36px]">
         <button onClick={handleBookmarkClick}>
           <Star
-            className={`w-4 h-4 text-muted-foreground transition-colors ${
+            className={`w-6 h-6 text-white/60 transition-colors ${
               isBookmarked ? "text-yellow-400 fill-yellow-400" : ""
             }`}
           />

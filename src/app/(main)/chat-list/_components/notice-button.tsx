@@ -1,18 +1,17 @@
 import { cn } from "@/lib/utils";
-import { ArrowLeft, ChevronRight, EllipsisVertical, X } from "lucide-react";
+import { ChevronRight, X } from "lucide-react";
 import Image from "next/image";
 import {
   Drawer,
+  DrawerClose,
   DrawerContent,
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-  DrawerClose,
 } from "@/components/ui/drawer";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Checkbox } from "@/components/ui/checkbox";
 
 type NoticeButtonProps = {
   className?: string;
@@ -58,7 +57,7 @@ export default function NoticeButton({
             <button
               type="button"
               className={cn(
-                "w-full bg-[#2F2F32] rounded-md flex items-center gap-2 justify-between px-4 py-[13px]",
+                "w-full bg-[#26252A] rounded-md flex items-center gap-2 justify-between px-4 py-[13px]",
                 className
               )}
             >

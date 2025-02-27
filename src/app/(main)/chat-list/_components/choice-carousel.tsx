@@ -3,11 +3,10 @@
 import * as React from "react";
 import {
   Carousel as CarouselPrimitive,
+  type CarouselApi,
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import { type CarouselApi } from "@/components/ui/carousel";
-import { cn } from "@/lib/utils";
 
 interface CarouselProps {
   className?: string;
@@ -19,7 +18,7 @@ interface CarouselProps {
 
 const DEFAULT_SLIDES = ["bg-purple-500", "bg-blue-500", "bg-green-500"];
 
-export default function Carousel({ images, className }: CarouselProps) {
+export default function ChoiceCarousel({ images, className }: CarouselProps) {
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
 
@@ -38,7 +37,7 @@ export default function Carousel({ images, className }: CarouselProps) {
   return (
     <CarouselPrimitive
       setApi={setApi}
-      className={cn("relative w-full mx-auto", className)}
+      className={"relative w-full mx-auto"}
       opts={{
         align: "start",
         loop: true,
@@ -49,7 +48,7 @@ export default function Carousel({ images, className }: CarouselProps) {
           ? images.map((item, index) => (
               <CarouselItem key={index}>
                 <div
-                  className="relative w-full h-[76px] rounded-[4px] overflow-hidden cursor-pointer"
+                  className={`relative w-full h-[76px] rounded-[4px] overflow-hidden cursor-pointer ${className}`}
                   style={{
                     backgroundImage: `url(${item.url})`,
                     backgroundSize: "cover",
@@ -67,7 +66,7 @@ export default function Carousel({ images, className }: CarouselProps) {
       </CarouselContent>
 
       {slides.length > 1 && (
-        <div className="absolute bottom-2 right-2 bg-black/60 text-white px-2 py-1 text-sm rounded-full">
+        <div className="absolute bottom-1 right-2 text-white px-2 py-1 text-[10px] ">
           {current}/{slides.length}
         </div>
       )}
