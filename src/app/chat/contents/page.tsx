@@ -4,7 +4,6 @@ import ChatBody from "@/app/chat/components/chat-body";
 import HeaderTitle from "@/app/chat/components/header-title/header-title";
 import { Suspense } from "react";
 import InnerContents from "@/app/chat/components/inner-contents";
-import SideFloating from "@/app/chat/components/side-floating";
 
 type Props = {
   params: {
@@ -24,8 +23,9 @@ export default function Page({ params }: Props) {
   * */
 
   const response = {
-    title: "타이틀 채팅방 1",
-    description: "채팅방입니다 채팅방입니다.",
+    title: "내부 컨텐츠",
+    description: "",
+    id: "contents",
     // imageUrl: "/images.jpeg",
     content:
       {
@@ -43,12 +43,11 @@ export default function Page({ params }: Props) {
         <ChatHeader
           title={response.title}
           description={response.description}
+          id={response.id}
           // imageUrl={response.imageUrl}
           content={response.content}
         />
-
-        <ChatBody />
-        {/*<ChatInput search={false} isReply={false}/>/*/}
+        <InnerContents id={id} />
       </Suspense>
     </div>
   );

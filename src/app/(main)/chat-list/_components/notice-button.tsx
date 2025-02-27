@@ -32,18 +32,18 @@ function ActionButton() {
 }
 
 export default function NoticeButton({
-  className,
-  title,
-  body,
-  time,
-  image,
-  actionButton = <ActionButton />,
-}: NoticeButtonProps) {
+                                       className,
+                                       title,
+                                       body,
+                                       time,
+                                       image,
+                                       actionButton = <ActionButton />,
+                                     }: NoticeButtonProps) {
   const [open, setOpen] = useState(false);
   const [isFullView, setIsFullView] = useState(false);
 
   return (
-    <div className="relative">
+    <div className="relative ">
       {isFullView ? (
         <NoticeFullView
           body={body}
@@ -57,8 +57,8 @@ export default function NoticeButton({
             <button
               type="button"
               className={cn(
-                "w-full bg-[#26252A] rounded-md flex items-center gap-2 justify-between px-4 py-[13px]",
-                className
+                "w-full bg-[#515151] rounded-2xl flex items-center gap-2 justify-between px-4 py-[13px]",
+                className,
               )}
             >
               <div className="flex items-center gap-2">
@@ -106,7 +106,8 @@ export default function NoticeButton({
             <DrawerFooter>
               <div className="flex items-center gap-2">
                 <DrawerClose asChild>
-                  <button className="w-full bg-[#26252A] rounded-md flex items-center gap-2 justify-center px-4 py-[13px]">
+                  <button
+                    className="w-full bg-[#26252A] rounded-md flex items-center gap-2 justify-center px-4 py-[13px]">
                     닫기
                   </button>
                 </DrawerClose>
@@ -126,11 +127,11 @@ export default function NoticeButton({
 }
 
 function NoticeFullView({
-  body,
-  time,
-  image,
-  onOpenChange,
-}: {
+                          body,
+                          time,
+                          image,
+                          onOpenChange,
+                        }: {
   body: string;
   time: string;
   image?: string;

@@ -5,7 +5,7 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
     width: 100%;
- 
+
 }
 
 @layer base {
@@ -117,4 +117,12 @@ div[contenteditable]:empty:before {
     content: attr(data-placeholder);
     color: #999999;
     pointer-events: none;
+}
+
+.two-line-ellipsis {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* 2줄 */
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
