@@ -16,11 +16,11 @@ export default function ChatPage() {
           <TabsTrigger value="choiceTalk" className={triggerClassName}>
             초이스톡
           </TabsTrigger>
-          <TabsTrigger value="contentTalk" className={triggerClassName}>
-            콘텐츠톡
-          </TabsTrigger>
+          {/*<TabsTrigger value="contentTalk" className={triggerClassName}>*/}
+          {/*  콘텐츠톡*/}
+          {/*</TabsTrigger>*/}
           <TabsTrigger value="bambooForestTalk" className={triggerClassName}>
-            대나무숲
+            데일리톡
           </TabsTrigger>
         </TabsList>
 
