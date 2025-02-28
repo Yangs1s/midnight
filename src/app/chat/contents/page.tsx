@@ -32,7 +32,7 @@ export default function Page({ params }: Props) {
         // top: <VoteHeader />,
         // detail: <VoteContent />,
         top: <HeaderTitle />,
-        detail: <InnerContents id={id} />,
+        detail: <InnerContents id={"contents"} />,
       },
   };
 
@@ -47,7 +47,7 @@ export default function Page({ params }: Props) {
           // imageUrl={response.imageUrl}
           content={response.content}
         />
-        <InnerContents id={id} />
+        <InnerContents id={"contents"} />
       </Suspense>
     </div>
   );

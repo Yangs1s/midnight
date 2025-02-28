@@ -126,3 +126,19 @@ div[contenteditable]:empty:before {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.three-line-ellipsis {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3; /* 2줄 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.four-line-ellipsis {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4; /* 2줄 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

@@ -2,11 +2,14 @@
 import React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 const InnerContents = ({ id }: { id: string }) => {
   const images = Array.from({ length: 2 }).map(
     (_, i) => `https://picsum.photos/250/300?random=${i}`,
   );
+  const router = useRouter();
+  console.log(id);
   return (
     <div className={` ${id !== "contents" ? "" : "mt-20"}`}>
       <div className={`flex  flex-col gap-4 overflow-y-scroll relative ${id !== "contents" ? "h-[80vh]" : ""}`}>
@@ -31,8 +34,12 @@ const InnerContents = ({ id }: { id: string }) => {
             ))
           }
         </div>
-        <div className={`${id === "contents" ? "fixed px-4" : "sticky"} bottom-0 w-full   bg-[#262626] pt-4`}>
+        <div
+          className={`${id === "contents" ? "fixed px-4 max-w-[470px] mx-auto w-full left-0 right-0" : "sticky  w-full"} bottom-0   bg-[#262626] pt-4`}>
           <Button className={"w-full bg-[#302F36]"} onClick={() => {
+            if (id === "contents") {
+              router.back();
+            }
           }}>
             닫기
           </Button>

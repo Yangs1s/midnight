@@ -91,7 +91,6 @@ export default function VoteContent() {
                     height={80}
                     className={cn(
                       "w-full h-auto object-cover rounded-[12px] aspect-square",
-                      isSelected ? "border-2 border-primary" : "",
                     )}
                   />
 

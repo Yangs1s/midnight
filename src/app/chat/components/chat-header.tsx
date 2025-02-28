@@ -13,6 +13,7 @@ import {
 import NoticeButton from "@/app/(main)/chat-list/_components/notice-button";
 import { motion } from "framer-motion";
 import SideFloating from "@/app/chat/components/side-floating";
+import ChatRoomInfo from "@/app/chat/components/chat-room-info";
 
 
 interface ChatHeaderProps {
@@ -29,7 +30,6 @@ interface ChatHeaderProps {
 export default function ChatHeader({
                                      title,
                                      description,
-                                     imageUrl,
                                      id,
                                      content,
                                    }: ChatHeaderProps) {
@@ -40,6 +40,8 @@ export default function ChatHeader({
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [isSideOpen, setIsSideOpen] = useState(false);
 
+
+  const [chatInfo, setChatInfo] = useState<boolean>(false);
   return (
     <div className={""}>
       <div className="w-full min-w-[320px] max-w-[470px] fixed top-0 z-10">
@@ -123,7 +125,7 @@ export default function ChatHeader({
                         />
                       </button>
                       <button onClick={() => {
-                        setIsOpenMenu(p => !p);
+                        setChatInfo((p) => !p);
                       }}>
                         <Image
                           src="/icon/burger.svg"
@@ -132,7 +134,10 @@ export default function ChatHeader({
                           height={20}
                         />
                       </button>
-                    </> : <button className="text-sm truncate block">
+                    </> : <button className="text-sm truncate block" onClick={() => {
+                      setIsOpenMenu(p => !p);
+
+                    }}>
                       <Image
                         src="/icon/threedot2.svg"
                         alt="threeDot"
@@ -199,9 +204,29 @@ export default function ChatHeader({
       </div>
       {
         isOpenMenu && (
-          <div className={"fixed z-40 w-full h-[300px] right-0 top-14 bg-red-400"}> 하이</div>
+          <div className={"absolute  z-40 w-[180px]   right-0 top-14 "}>
+            <ul className={"flex flex-col w-full    rounded-[12px]  bg-[#3d3c3c] h-full"}>
+              <li className={"w-full text-[12px] px-3 py-[12px] text-white"} onClick={() => {
+                alert("수정");
+              }}>수정
+              </li>
+              <li className={"w-full text-[12px] px-3 py-[12px] border-t-[1px] border-white/40 text-white"}
+                  onClick={() => {
+                    alert("삭제");
+                  }}>삭제
+              </li>
+              <li className={"w-full text-[12px] px-3 py-[12px] border-t-[1px] border-white/40 text-white"}
+                  onClick={() => {
+                    alert("페이지 추가");
+                  }}>페이지 추가
+              </li>
+            </ul>
+          </div>
         )
       }
+      {chatInfo && (
+        <ChatRoomInfo isGroup={true} closeInfo={() => setChatInfo(false)} />
+      )}
     </div>
   );
 }
