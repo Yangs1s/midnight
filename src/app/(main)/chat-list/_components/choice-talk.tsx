@@ -1,17 +1,17 @@
 "use client";
 
-import CollapsibleChatList from "@/app/(main)/chat-list/_components/callapsible-chat-list";
 import Carousel from "@/app/(main)/chat-list/_components/carousel";
-import ChoiceChatADItem from "@/app/(main)/chat-list/_components/choice-chat-ad-item";
 import ChoiceChatItem from "@/app/(main)/chat-list/_components/choice-chat-item";
 import NoticeButton from "@/app/(main)/chat-list/_components/notice-button";
-import { RegionSelector } from "@/app/(main)/chat-list/_components/rejion-selector";
-import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import ChoiceTalkRegionSelector from "@/app/(main)/chat-list/_components/choice-talk-region-selector";
+import ChoiceChatCollapsible from "@/app/(main)/chat-list/_components/choice-chat-collapsible";
+import ChoiceCarousel from "@/app/(main)/chat-list/_components/choice-carousel";
 
 const CAROUSEL_IMAGES = [
   {
-    url: "https://gongu.copyright.or.kr/gongu/wrt/cmmn/wrtFileImageView.do?wrtSn=13262118&filePath=L2Rpc2sxL25ld2RhdGEvMjAyMC8yMS9DTFMxMDAwNi82MmZhMWExMy03ZjRmLTQ1NWMtYTZlNy02ZTk2YjhjMjBkYTk=&thumbAt=Y&thumbSe=b_tbumb&wrtTy=10006",
+    url: "/choice-banner.png",
     onClick: () => alert("button clicked 1"),
   },
   {
@@ -29,7 +29,8 @@ const CHAT_ITEMS = [
     time: "02:58",
     title: "채팅방 이름이 들어갑니다",
     location: "강남 논현",
-    description: "오늘만 강남 특가 이벤트 진행!",
+    description: "이벤트 9시 이전 출근 +1",
+    description2: "지명비 +1",
     defaultBookmarked: true,
     imageUrl: "/images.jpeg",
     onClick: () => alert("clicked"),
@@ -42,7 +43,7 @@ const CHAT_ITEMS = [
     time: "01:30",
     title: "취업준비생 모여라",
     location: "잠실 송파",
-    description: "취준생들의 고민 상담소",
+    description: "이벤트 9시 이전 출근 +1",
     defaultBookmarked: false,
     onClick: () => alert("clicked"),
     onBookmarkClick: () => alert("bookmark clicked"),
@@ -54,7 +55,7 @@ const CHAT_ITEMS = [
     time: "12:45",
     title: "주식투자 정보공유방",
     location: "여의도",
-    description: "실시간 주식 정보 공유",
+    description: "이벤트 9시 이전 출근 +1",
     defaultBookmarked: false,
     onClick: () => alert("clicked"),
     onBookmarkClick: () => alert("bookmark clicked"),
@@ -66,7 +67,7 @@ const CHAT_ITEMS = [
     time: "11:20",
     title: "독서모임",
     location: "강남 선릉",
-    description: "이번 주 선정도서: 아몬드",
+    description: "이벤트 9시 이전 출근 +1",
     defaultBookmarked: true,
     onClick: () => alert("clicked"),
     onBookmarkClick: () => alert("bookmark clicked"),
@@ -78,7 +79,7 @@ const CHAT_ITEMS = [
     timeType: "오전",
     title: "맛집 탐방",
     location: "홍대 신촌",
-    description: "주말 맛집 투어 멤버 모집중",
+    description: "이벤트 9시 이전 출근 +1",
     defaultBookmarked: false,
     onClick: () => alert("clicked"),
     onBookmarkClick: () => alert("bookmark clicked"),
@@ -87,6 +88,7 @@ const CHAT_ITEMS = [
 
 export default function ChoiceTalk() {
   const router = useRouter();
+  const [selected, setSelected] = useState<string>("지역 전체");
 
   return (
     <div>
@@ -98,7 +100,8 @@ export default function ChoiceTalk() {
         time="2025-01-23 12:00"
         body="공지사항 본문이 들어갑니다. 공지사항 본문이 들어갑니다.공지사항 본문이 들어갑니다.공지사항 본문이 들어갑니다.공지사항 본문이 들어갑니다.공지사항 본문이 들어갑니다.공지사항 본문이 들어갑니다.공지사항 본문이 들어갑니다."
       />
-      <CollapsibleChatList title="즐겨찾는 톡">
+
+      <div className="px-4 py-[14px] bg-[#26252A] mb-5 -mx-4 rounded-[10px]">
         {CHAT_ITEMS.map((item) => (
           <ChoiceChatItem
             key={item.title}
@@ -106,18 +109,82 @@ export default function ChoiceTalk() {
             onClick={() => router.push(`/chat/${item.id}`)}
           />
         ))}
-      </CollapsibleChatList>
-      <Separator className="my-4 !bg-[#26252A] py-1" />
-      <RegionSelector />
-      {CHAT_ITEMS.map((item) => (
-        <ChoiceChatItem
-          key={item.title}
-          {...item}
-          onClick={() => router.push(`/chat/${item.id}`)}
+      </div>
+
+      <div className="px-4 py-[14px] bg-[#26252A] mb-5 -mx-4 rounded-[10px]">
+        <p className="text-lg font-semibold text-white">어드민 고정톡</p>
+        {CHAT_ITEMS.map((item) => (
+          <ChoiceChatItem
+            key={item.title}
+            {...item}
+            onClick={() => router.push(`/chat/${item.id}`)}
+          />
+        ))}
+      </div>
+
+      <ChoiceTalkRegionSelector title={selected} setTitle={setSelected} />
+
+      <div className="-mx-4">
+        <ChoiceChatCollapsible title={"서울"}>
+          <div className="px-4">
+            {CHAT_ITEMS.map((item) => (
+              <ChoiceChatItem
+                key={item.title}
+                {...item}
+                onClick={() => router.push(`/chat/${item.id}`)}
+              />
+            ))}
+            <ChoiceCarousel className="!h-[53px]" images={CAROUSEL_IMAGES} />
+            {CHAT_ITEMS.map((item) => (
+              <ChoiceChatItem
+                key={item.title}
+                {...item}
+                onClick={() => router.push(`/chat/${item.id}`)}
+              />
+            ))}
+          </div>
+        </ChoiceChatCollapsible>
+        <ChoiceChatCollapsible title="부산">
+          <div className="px-4">
+            {CHAT_ITEMS.map((item) => (
+              <ChoiceChatItem
+                key={item.title}
+                {...item}
+                onClick={() => router.push(`/chat/${item.id}`)}
+              />
+            ))}
+          </div>
+        </ChoiceChatCollapsible>
+        <ChoiceChatCollapsible title="인천">
+          <div className="px-4">
+            {CHAT_ITEMS.map((item) => (
+              <ChoiceChatItem
+                key={item.title}
+                {...item}
+                onClick={() => router.push(`/chat/${item.id}`)}
+              />
+            ))}
+          </div>
+        </ChoiceChatCollapsible>
+        <ChoiceChatCollapsible title="대전">
+          <div className="px-4">
+            {CHAT_ITEMS.map((item) => (
+              <ChoiceChatItem
+                key={item.title}
+                {...item}
+                onClick={() => router.push(`/chat/${item.id}`)}
+              />
+            ))}
+          </div>
+        </ChoiceChatCollapsible>
+      </div>
+
+      <div className="my-4 -mx-4">
+        <ChoiceCarousel
+          className="h-[76px] rounded-none"
+          images={CAROUSEL_IMAGES}
         />
-      ))}
-      <ChoiceChatADItem {...CHAT_ITEMS[0]} advertiser="메디힐" />
-      <Carousel className="my-4" images={CAROUSEL_IMAGES} />
+      </div>
     </div>
   );
 }
