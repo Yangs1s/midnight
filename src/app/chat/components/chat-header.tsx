@@ -12,11 +12,14 @@ import {
 } from "@/components/ui/collapsible";
 import NoticeButton from "@/app/(main)/chat-list/_components/notice-button";
 import { motion } from "framer-motion";
+import SideFloating from "@/app/chat/components/side-floating";
+
 
 interface ChatHeaderProps {
   title?: string;
   description: string;
   imageUrl?: string;
+  id?: string;
   content: {
     top: React.ReactNode;
     detail: React.ReactNode;
@@ -27,12 +30,15 @@ export default function ChatHeader({
                                      title,
                                      description,
                                      imageUrl,
+                                     id,
                                      content,
                                    }: ChatHeaderProps) {
   const router = useRouter();
   const [isSearchMode, setIsSearchMode] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenMenu, setIsOpenMenu] = useState(false);
+  const [isSideOpen, setIsSideOpen] = useState(false);
 
   return (
     <div className={""}>
@@ -77,15 +83,15 @@ export default function ChatHeader({
                   {title ? (
                     <>
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="relative flex shrink-0 overflow-hidden rounded-full w-8 h-8">
-                          <Image
-                            src={imageUrl || "/images.jpeg"}
-                            alt="채팅방 이미지"
-                            className="aspect-square h-full w-full object-cover"
-                            width={30}
-                            height={30}
-                          />
-                        </span>
+                        {/*<span className="relative flex shrink-0 overflow-hidden rounded-full w-8 h-8">*/}
+                        {/*  <Image*/}
+                        {/*    src={imageUrl || "/images.jpeg"}*/}
+                        {/*    alt="채팅방 이미지"*/}
+                        {/*    className="aspect-square h-full w-full object-cover"*/}
+                        {/*    width={30}*/}
+                        {/*    height={30}*/}
+                        {/*  />*/}
+                        {/*</span>*/}
                         <span className="font-medium text-sm truncate">
                           {title}
                         </span>
@@ -105,74 +111,97 @@ export default function ChatHeader({
               </div>
 
               <div className="flex items-center gap-3 flex-shrink-0">
-                <button onClick={() => setIsSearchMode(true)}>
-                  <Image
-                    src="/icon/search.svg"
-                    alt="search"
-                    width={20}
-                    height={20}
-                  />
-                </button>
-                <button onClick={() => alert("menu clicked")}>
-                  <Image
-                    src="/icon/burger.svg"
-                    alt="menu"
-                    width={20}
-                    height={20}
-                  />
-                </button>
+                {
+                  id !== "contents" ?
+                    <>
+                      <button onClick={() => setIsSearchMode(true)}>
+                        <Image
+                          src="/icon/search.svg"
+                          alt="search"
+                          width={20}
+                          height={20}
+                        />
+                      </button>
+                      <button onClick={() => {
+                        setIsOpenMenu(p => !p);
+                      }}>
+                        <Image
+                          src="/icon/burger.svg"
+                          alt="menu"
+                          width={20}
+                          height={20}
+                        />
+                      </button>
+                    </> : <button className="text-sm truncate block">
+                      <Image
+                        src="/icon/threedot2.svg"
+                        alt="threeDot"
+                        width={20}
+                        height={20}
+                      />
+                    </button>}
               </div>
             </div>
           )}
         </div>
 
-        <Collapsible
-          open={isOpen}
-          onOpenChange={setIsOpen}
-          className="relative"
-        >
-          <CollapsibleTrigger asChild>
-            <div className="p-4 bg-[#26252A] flex items-center justify-between">
-              <p className="text-xs">
-                {content.top}
-              </p>
-              <div
-                className={cn(
-                  " flex items-center justify-center w-4 h-4 transition-transform",
-                  isOpen && "rotate-180",
-                )}
+        {id !== "contents" && (
+          <>
+            <Collapsible
+              open={isOpen}
+              onOpenChange={setIsOpen}
+              className="relative"
+            >
+              <CollapsibleTrigger asChild>
+                <div className="p-4 bg-[#26252A] flex items-center justify-between">
+                  <p className="text-xs">
+                    {content.top}
+                  </p>
+                  <div
+                    className={cn(
+                      " flex items-center justify-center w-4 h-4 transition-transform",
+                      isOpen && "rotate-180",
+                    )}
+                  >
+                    <Image src={"/icon/downArrow.svg"} alt={"화살표"} width={32} height={32} />
+                    {/*<ChevronDown strokeWidth={3} className="w-3 h-3 text-white"/>*/}
+                  </div>
+                </div>
+              </CollapsibleTrigger>
+              <motion.div
+                initial="collapsed"
+                animate={isOpen ? "open" : "collapsed"}
+                exit="collapsed"
+                variants={{
+                  open: { opacity: 1, height: "auto" },
+                  collapsed: { opacity: 0, height: 0 },
+                }}
+                transition={{ duration: 0.2, ease: "easeInOut" }}
               >
-                <Image src={"/icon/downArrow.svg"} alt={"화살표"} width={32} height={32} />
-                {/*<ChevronDown strokeWidth={3} className="w-3 h-3 text-white"/>*/}
-              </div>
+                <CollapsibleContent>
+                  <div className="bg-[#26252A] px-4 pb-4">
+                    <p className="text-xs">{content.detail}</p>
+                  </div>
+                </CollapsibleContent>
+              </motion.div>
+            </Collapsible>
+            <div className="mx-4 mt-4">
+              <NoticeButton
+                title="공지 내용이 들어갑니다!"
+                time="12:00"
+                body="알림 내용"
+                actionButton={<ActionButton />}
+              />
             </div>
-          </CollapsibleTrigger>
-          <motion.div
-            initial="collapsed"
-            animate={isOpen ? "open" : "collapsed"}
-            exit="collapsed"
-            variants={{
-              open: { opacity: 1, height: "auto" },
-              collapsed: { opacity: 0, height: 0 },
-            }}
-            transition={{ duration: 0.2, ease: "easeInOut" }}
-          >
-            <CollapsibleContent>
-              <div className="bg-[#26252A] px-4 pb-4">
-                <p className="text-xs">{content.detail}</p>
-              </div>
-            </CollapsibleContent>
-          </motion.div>
-        </Collapsible>
-        <div className="mx-4 mt-4">
-          <NoticeButton
-            title="공지 내용이 들어갑니다!"
-            time="12:00"
-            body="알림 내용"
-            actionButton={<ActionButton />}
-          />
-        </div>
+            <SideFloating isSideOpen={isSideOpen} setIsSideOpen={setIsSideOpen} />
+          </>
+        )}
       </div>
+      {
+        isOpenMenu && (
+          <div className={"fixed z-40 w-full h-[300px] right-0 top-14 bg-red-400"}> 하이</div>
+        )
+      }
     </div>
   );
 }
