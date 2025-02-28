@@ -21,7 +21,7 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 export default function ProfileSetting() {
-  const [preview, setPreview] = useState<string>("/random-profile.png");
+  const [preview, setPreview] = useState<string>("/random-profile-add.png");
   const fileRef = useRef<HTMLInputElement>(null);
   const [isActive, setActive] = useState<boolean>(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);

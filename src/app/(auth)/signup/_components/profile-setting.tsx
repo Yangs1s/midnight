@@ -46,7 +46,7 @@ export default function ProfileSettings() {
   });
 
   const getRandomProfile = () => {
-    setSelectedImage("/random-profile.png");
+    setSelectedImage("/random-profile-add.png");
   };
 
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {

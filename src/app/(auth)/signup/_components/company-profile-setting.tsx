@@ -33,7 +33,7 @@ type ProfileFormValues = z.infer<typeof profileSchema>;
 export default function CompanyProfileSetting() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(
-    "/base-profile.png"
+    "/base-profile-add.png"
   );
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();

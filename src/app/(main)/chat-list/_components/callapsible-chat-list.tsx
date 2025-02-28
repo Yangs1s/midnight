@@ -40,6 +40,7 @@ export default function CollapsibleChatList({
             collapsed: { opacity: 0, height: 0 },
           }}
           transition={{ duration: 0.2, ease: "easeInOut" }}
+          style={{ overflow: "hidden" }}
         >
           <CollapsibleContent forceMount>
             <div>{children}</div>

@@ -66,9 +66,10 @@ export default function ChoiceChatCollapsible({
               collapsed: { opacity: 0, height: 0 },
             }}
             transition={{ duration: 0.2, ease: "easeInOut" }}
+            style={{ overflow: "hidden" }}
           >
             <CollapsibleContent forceMount>
-              {isOpen && <div>{children}</div>}
+              <div>{children}</div>
             </CollapsibleContent>
           </motion.div>
         </AnimatePresence>

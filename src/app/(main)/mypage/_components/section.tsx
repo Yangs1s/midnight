@@ -45,7 +45,7 @@ export function BusinessSectionList() {
           { label: "광고 상품 안내", href: "/mypage/setting" },
           { label: "내 활동 내역", href: "/mypage/setting" },
           { label: "내 광고 관리", href: "/mypage/setting" },
-          { label: "사업자 정보 관리", href: "/mypage/setting" },
+          { label: "사업자 정보 관리", href: "/mypage/setting-business" },
         ]}
       />
 

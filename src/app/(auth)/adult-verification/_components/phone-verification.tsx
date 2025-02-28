@@ -19,6 +19,7 @@ import CarrierSelection from "./carrier-selection";
 import VerificationTerms from "@/app/(auth)/adult-verification/_components/verification-terms";
 import { useRouter } from "next/navigation";
 import { Label } from "@/components/ui/label";
+import { motion, AnimatePresence } from "framer-motion";
 
 const carriers = [
   { id: "SKT", label: "SKT" },
@@ -42,7 +43,6 @@ const formSchema = z.object({
 });
 
 type FormValues = z.infer<typeof formSchema>;
-
 interface TermsData {
   [key: string]: boolean;
 }
@@ -53,6 +53,7 @@ export default function PhoneVerification({
   type: "user" | "company";
 }) {
   const router = useRouter();
+  const [step, setStep] = useState(0);
   const [isCarrierOpen, setIsCarrierOpen] = useState(false);
   const [isVerificationOpen, setIsVerificationOpen] = useState(false);
   const [selectedCarrier, setSelectedCarrier] = useState("");
@@ -79,6 +80,178 @@ export default function PhoneVerification({
     router.push(`/adult-verification?type=${type}&step=3`);
   };
 
+  const nextStep = async () => {
+    let valid = false;
+    if (step === 0) {
+      valid = await form.trigger("phoneNumber");
+    } else if (step === 1) {
+      valid = await form.trigger("carrier");
+    } else if (step === 2) {
+      valid = await form.trigger(["residentNumber", "residentNumber2"]);
+    } else if (step === 3) {
+      valid = await form.trigger("name");
+    }
+
+    if (valid) {
+      if (step === stepsComponents.length - 1) {
+        form.handleSubmit(onSubmit)();
+      } else {
+        setStep(step + 1);
+      }
+    }
+  };
+
+  const stepsComponents = [
+    <div key="phoneNumber" className="space-y-2">
+      <Label className="text-sm">휴대폰 번호</Label>
+      <FormField
+        control={form.control}
+        name="phoneNumber"
+        render={({ field }) => (
+          <FormItem>
+            <FormControl>
+              <Input placeholder="휴대폰 번호 입력" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+    </div>,
+    <div key="carrier" className="space-y-2">
+      <Label className="text-sm">통신사</Label>
+      <FormField
+        control={form.control}
+        name="carrier"
+        render={() => (
+          <FormItem>
+            <FormControl>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setIsCarrierOpen(true)}
+                className="w-full justify-between bg-[#26252a] border-0 h-14 text-left font-normal text-white"
+              >
+                <span>
+                  {carriers.find((c) => c.id === selectedCarrier)?.label ||
+                    "통신사"}
+                </span>
+                <ChevronDown className="h-4 w-4 opacity-50" />
+              </Button>
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+    </div>,
+    <div key="residentNumber" className="space-y-2">
+      <Label className="text-sm">생년월일 및 성별</Label>
+      <div className="flex justify-between items-center gap-2 bg-[#26252a] border-0 h-12 text-white placeholder:text-[#666666] rounded-md px-3">
+        <div className="flex items-center w-full">
+          <FormField
+            control={form.control}
+            name="residentNumber"
+            render={({ field }) => (
+              <FormItem className="m-0">
+                <FormControl>
+                  <Input
+                    {...field}
+                    placeholder="YYMMDD"
+                    maxLength={6}
+                    value={field.value}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/[^0-9]/g, "");
+                      if (value.length <= 6) {
+                        field.onChange(value);
+                      }
+                    }}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+        </div>
+        <Minus width={16} />
+        <div className="flex items-center w-full">
+          <FormField
+            control={form.control}
+            name="residentNumber2"
+            render={({ field }) => (
+              <FormItem className="m-0">
+                <FormControl>
+                  <Input
+                    {...field}
+                    placeholder="0"
+                    maxLength={1}
+                    value={field.value}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/[^0-9]/g, "");
+                      if (value.length <= 1) {
+                        field.onChange(value);
+                      }
+                    }}
+                    className="w-8"
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          <span className="text-white flex items-center">
+            {[...Array(6)].map((_, i) => (
+              <Asterisk key={i} size={14} />
+            ))}
+          </span>
+        </div>
+      </div>
+      <FormField
+        control={form.control}
+        name="residentNumber"
+        render={({ fieldState: { error } }) =>
+          error ? (
+            <div className="min-h-[1.5rem] mt-1">
+              <FormMessage />
+            </div>
+          ) : (
+            <></>
+          )
+        }
+      />
+      <FormField
+        control={form.control}
+        name="residentNumber2"
+        render={({ fieldState: { error } }) =>
+          error ? (
+            <div className="min-h-[1.5rem] mt-1">
+              <FormMessage />
+            </div>
+          ) : (
+            <></>
+          )
+        }
+      />
+    </div>,
+    <div key="name" className="space-y-2">
+      <Label>이름</Label>
+      <FormField
+        control={form.control}
+        name="name"
+        render={({ field }) => (
+          <FormItem>
+            <FormControl>
+              <Input placeholder="이름을 입력해주세요" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+    </div>,
+  ];
+
+  const variants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: -50 },
+  };
+
   return (
     <div className="text-white">
       <div className="pb-8">
@@ -98,159 +271,31 @@ export default function PhoneVerification({
         </p>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <div className="space-y-2">
-              <Label>이름</Label>
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input placeholder="이름을 입력해주세요" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            {/* 생년월일 및 성별 입력 */}
-            <div className="space-y-2">
-              <Label className="text-sm">생년월일 및 성별</Label>
-              <div className="flex justify-between items-center gap-2 bg-[#26252a] border-0 h-12 text-white placeholder:text-[#666666] rounded-md px-3">
-                <div className="flex items-center w-full">
-                  <FormField
-                    control={form.control}
-                    name="residentNumber"
-                    render={({ field }) => (
-                      <FormItem className="m-0">
-                        <FormControl>
-                          <Input
-                            {...field}
-                            placeholder="YYMMDD"
-                            maxLength={6}
-                            value={field.value}
-                            onChange={(e) => {
-                              const value = e.target.value.replace(
-                                /[^0-9]/g,
-                                ""
-                              );
-                              if (value.length <= 6) {
-                                field.onChange(value);
-                              }
-                            }}
-                          />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <Minus width={16} />
-                <div className="flex items-center w-full">
-                  <FormField
-                    control={form.control}
-                    name="residentNumber2"
-                    render={({ field }) => (
-                      <FormItem className="m-0">
-                        <FormControl>
-                          <Input
-                            {...field}
-                            placeholder="0"
-                            maxLength={1}
-                            value={field.value}
-                            onChange={(e) => {
-                              const value = e.target.value.replace(
-                                /[^0-9]/g,
-                                ""
-                              );
-                              if (value.length <= 1) {
-                                field.onChange(value);
-                              }
-                            }}
-                            className="w-8"
-                          />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-                  <span className="text-white flex items-center">
-                    {[...Array(6)].map((_, i) => (
-                      <Asterisk key={i} size={14} />
-                    ))}
-                  </span>
-                </div>
-              </div>
-              <FormField
-                control={form.control}
-                name="residentNumber"
-                render={({ fieldState: { error } }) =>
-                  error ? (
-                    <div className="min-h-[1.5rem] mt-1">
-                      <FormMessage />
-                    </div>
-                  ) : (
-                    <></>
-                  )
-                }
-              />
-              <FormField
-                control={form.control}
-                name="residentNumber2"
-                render={({ fieldState: { error } }) =>
-                  error ? (
-                    <div className="min-h-[1.5rem] mt-1">
-                      <FormMessage />
-                    </div>
-                  ) : (
-                    <></>
-                  )
-                }
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-sm">통신사</Label>
-              <FormField
-                control={form.control}
-                name="carrier"
-                render={() => (
-                  <FormItem>
-                    <FormControl>
-                      <Button
-                        type="button"
-                        variant="outline"
-                        onClick={() => setIsCarrierOpen(true)}
-                        className="w-full justify-between bg-[#26252a] border-0 h-14 text-left font-normal text-white"
-                      >
-                        <span>
-                          {carriers.find((c) => c.id === selectedCarrier)
-                            ?.label || "통신사"}
-                        </span>
-                        <ChevronDown className="h-4 w-4 opacity-50" />
-                      </Button>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-sm">휴대폰 번호</Label>
-              <FormField
-                control={form.control}
-                name="phoneNumber"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input placeholder="휴대폰 번호 입력" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              nextStep();
+            }}
+            className="space-y-6 relative"
+          >
+            <AnimatePresence>
+              <motion.div
+                key={step}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                variants={variants}
+                transition={{ duration: 0.3 }}
+              >
+                {stepsComponents[step]}
+              </motion.div>
+            </AnimatePresence>
+            {stepsComponents
+              .slice(0, step)
+              .reverse()
+              .map((component, index) => (
+                <div key={index}>{component}</div>
+              ))}
 
             <p className="text-[#666666] text-sm">
               입력하신 정보는 본인 인증 용도로 활용되며, 서비스 이용약관을
