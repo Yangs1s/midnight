@@ -205,7 +205,7 @@ function CheckBoxContent({
             onCheckedChange={(checked) =>
               handleCheckboxChange(term.id, checked as boolean)
             }
-            className={`border-white data-[state=checked]:bg-primary data-[state=checked]:border-primary ${isTermAll ? "rounded-full w-6 h-6" : ""}`}
+            className={`border-white data-[state=checked]:bg-primary data-[state=checked]:border-primary ${isTermAll ? " rounded-full w-6 h-6 flex items-center justify-center `} " : ""}`}
           />
           <label
             htmlFor={term.id}
