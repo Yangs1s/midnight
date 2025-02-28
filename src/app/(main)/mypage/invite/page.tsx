@@ -2,9 +2,10 @@
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ChevronLeft, Link2 } from "lucide-react";
-import Image from "next/image";
 import { toast } from "sonner";
+import GlobalHeader from "@/components/container/global-header";
+import QRCode from "react-qr-code";
+import Image from "next/image";
 
 const userInviteCode = "1234567890";
 
@@ -21,34 +22,29 @@ export default function FriendInvite() {
 
   return (
     <div className="min-h-screen bg-[#1b1b1e] text-white">
-      <header className="flex items-center justify-between py-4">
-        <div className="flex items-center gap-2">
-          <ChevronLeft className="w-6 h-6" />
-          <span className="text-lg">친구 초대</span>
-        </div>
-      </header>
+      <GlobalHeader title={"친구 초대"} className={"border-none"} />
 
       <main className="py-6 flex flex-col items-center">
-        <h2 className="text-2xl font-bold mb-8">친구 초대 QR 코드</h2>
+        <h2 className="text-2xl font-bold mb-5">친구 초대 QR 코드</h2>
 
         <div className="bg-white p-4 rounded-lg mb-8">
-          <Image
-            src="/images.jpeg"
-            alt="QR Code"
-            width={200}
-            height={200}
-            className="w-[200px] h-[200px] object-cover"
+          <QRCode
+            value={userInviteCode}
+            size={220}
+            bgColor="#FFFFFF"
+            fgColor="#000000"
+            level="H"
           />
         </div>
 
-        <h3 className="text-xl font-bold mb-2">편하게 친구 초대 하세요!</h3>
-        <p className="text-[#bbbbbb] text-xs text-center mb-8">
+        <h3 className="text-2xl font-bold mb-4">편하게 친구 초대 하세요!</h3>
+        <p className="text-white text-sm font-medium text-center mb-8">
           아래 QR코드를 카메라로 스캔하면
           <br />
           간편하게 초대할 수 있어요.
         </p>
 
-        <p className="text-[#666666] mb-4 text-xs">다른 방법으로 초대하기</p>
+        <p className="text-[#666666] mb-5 text-sm">다른 방법으로 초대하기</p>
         <div className="flex gap-4 mb-8">
           <Button className="w-12 h-12 rounded-full border-none" size="icon">
             <Image
@@ -68,13 +64,34 @@ export default function FriendInvite() {
               height={24}
             />
           </Button>
-          <Button
-            className="w-12 h-12 rounded-full bg-[#333333] hover:bg-[#333333]/90"
-            size="icon"
+          <button
+            className="w-12 h-12 rounded-full bg-[#333333] hover:bg-[#333333]/90 flex justify-center items-center"
+            type="button"
             onClick={handleCopyLink}
           >
-            <Link2 className="w-5 h-5" />
-          </Button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="25"
+              height="24"
+              viewBox="0 0 25 24"
+              fill="none"
+            >
+              <path
+                d="M13.5164 6.18054L15.7764 3.92055C17.0064 2.69055 19.0064 2.69055 20.2364 3.92055C21.4664 5.15055 21.4664 7.15055 20.2364 8.38055L14.8164 13.8005C13.5864 15.0305 11.5864 15.0305 10.3564 13.8005"
+                stroke="white"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M10.7958 17.8198L8.53582 20.0798C7.30582 21.3098 5.30582 21.3098 4.07582 20.0798C2.84582 18.8498 2.84582 16.8498 4.07582 15.6198L9.49582 10.1998C10.7258 8.96984 12.7258 8.96984 13.9558 10.1998"
+                stroke="white"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
         </div>
 
         <Card className="w-full bg-[#26252a] border-none p-4 mb-6">
@@ -89,48 +106,30 @@ export default function FriendInvite() {
 
         <Card className="w-full bg-[#26252a] border-none p-4">
           <h4 className="font-medium mb-4">꼭 알아두세요!</h4>
-          <ul className="space-y-4 text-sm text-[#bbbbbb]">
-            <div className="flex items-start gap-2">
-              <div className="w-1.5 h-1.5 bg-[#bbbbbb] mt-1 rounded-full"></div>
+          <ul className="space-y-2 text-sm text-[#bbbbbb]">
+            <li className="flex items-start before:content-['•'] before:text-[#bbbbbb] before:mr-2">
               <p>
-                초대할 수 있는 친구 수는 제한이 없습니다. 마음껏 초대해 보세요.
+                초대할 수 있는 친구 수는 제한이 없습니다. 마음껏 초대해보세요.
               </p>
-            </div>
-            <div className="flex items-start gap-2">
-              <div className="w-1.5 h-1.5 bg-[#bbbbbb] mt-1 rounded-full"></div>
+            </li>
+            <li className="flex items-start before:content-['•'] before:text-[#bbbbbb] before:mr-2">
               <p>
-                친구가 초대 링크를 통해 앱을 설치하고 가입까지 완료해야
-                이전됩니다.
+                초대받은 친구가 가입을 완료하면 친구 초대현황에 따라 리워드가
+                제공됩니다. (추후 제공)
               </p>
-            </div>
-            <div className="flex items-start gap-2">
-              <div className="w-1.5 h-1.5 bg-[#bbbbbb] mt-1 rounded-full"></div>
+            </li>
+            <li className="flex items-start before:content-['•'] before:text-[#bbbbbb] before:mr-2">
               <p>
-                초대받은 친구가 가입을 완료하는 즉시 나와 친구 모두에게 포인트가
-                지급됩니다.
+                운영 정책에 부합하지 않는 방법을 통해 참여한 것으로 판단될 시,
+                리워드가 지급되지 않거나 회수 될 수 있습니다.
               </p>
-            </div>
-            <div className="flex items-start gap-2">
-              <div className="w-1.5 h-1.5 bg-[#bbbbbb] mt-1 rounded-full"></div>
+            </li>
+            <li className="flex items-start before:content-['•'] before:text-[#bbbbbb] before:mr-2">
               <p>
-                포인트 지급 내역은 MY메뉴 우측 상단 포인트 내역 페이지에서 확인
-                가능합니다.
-              </p>
-            </div>
-            <div className="flex items-start gap-2">
-              <div className="w-1.5 h-1.5 bg-[#bbbbbb] mt-1 rounded-full"></div>
-              <p>
-                번개장터 운영 정책에 부합하지 않는 방법을 통해 참여한 것으로
-                판단될 시, 번개포인트가 지급되지 않거나 취소 될 수 있습니다.
-              </p>
-            </div>
-            <div className="flex items-start gap-2">
-              <div className="w-1.5 h-1.5 bg-[#bbbbbb] mt-1 rounded-full"></div>
-              <p>
-                친구 초대 리워드는 사전 공지 없이 내용이 변경되거나 중료될 수
+                친구 초대 리워드는 사전 공지 없이 내용이 변경되거나 종료될 수
                 있습니다.
               </p>
-            </div>
+            </li>
           </ul>
         </Card>
       </main>

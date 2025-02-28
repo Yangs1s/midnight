@@ -1,14 +1,12 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ChevronLeft, Eye, EyeOff, Info } from "lucide-react";
+import { ChevronRight, Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import React, { useState } from "react";
 import Withdrawal from "@/app/(main)/mypage/_components/withdrawal";
-import BusinessInfoSetting from "@/app/(main)/mypage/_components/business-info-setting";
-import BusinessInfo from "../_components/business-info";
 import {
   Form,
   FormControl,
@@ -18,7 +16,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
-import ConfirmModal from "@/app/(main)/mypage/setting/_components/confirm-modal";
+import GlobalHeader from "@/components/container/global-header";
+import { useRouter } from "next/navigation";
+import LabelRequiredIcon from "@/app/(main)/mypage/_components/label-required-icon";
 
 const formSchema = z
   .object({
@@ -27,6 +27,14 @@ const formSchema = z
       .min(2, "2자 이상 입력해주세요")
       .max(12, "12자 이하로 입력해주세요")
       .regex(/^[a-z0-9]+$/, "영문 소문자, 숫자만 입력 가능합니다"),
+    rawPassword: z
+      .string()
+      .min(8, "8자 이상 입력해주세요")
+      .max(20, "20자 이하로 입력해주세요")
+      .regex(
+        /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/,
+        "영문, 숫자, 특수문자를 포함해주세요"
+      ),
     password: z
       .string()
       .min(8, "8자 이상 입력해주세요")
@@ -44,18 +52,6 @@ const formSchema = z
 
 type FormValues = z.infer<typeof formSchema>;
 
-const mockBusinessInfo = {
-  businessName: "주식회사 미드나잇테라스",
-  businessAddress: "서울시 강남구 신사동 142-12",
-  representativeName: "홍길동",
-  businessStatus: "등록 완료",
-  businessRegistration: {
-    name: "IMG_4861",
-    size: 4540.9,
-    url: "/images.jpeg",
-  },
-};
-
 type Props = {
   searchParams: {
     userType: "business" | "user";
@@ -63,14 +59,15 @@ type Props = {
 };
 
 export default function SettingPage({ searchParams }: Props) {
+  const router = useRouter();
   const isBusiness = searchParams.userType === "business";
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      id: "길동2",
+      id: "qwerty1234",
+      rawPassword: "",
       password: "",
       confirmPassword: "",
     },
@@ -80,14 +77,29 @@ export default function SettingPage({ searchParams }: Props) {
     console.log(data);
   };
 
+  const password = useWatch({
+    control: form.control,
+    name: "password",
+  });
+
+  const rawPassword = useWatch({
+    control: form.control,
+    name: "rawPassword",
+  });
+
+  const confirmPassword = useWatch({
+    control: form.control,
+    name: "confirmPassword",
+  });
+
+  const isValidRawPassword = rawPassword && !form.formState.errors.rawPassword;
+  const isValidPassword = password && !form.formState.errors.password;
+  const isValidConfirmPassword =
+    confirmPassword && !form.formState.errors.confirmPassword;
+
   return (
     <div className="bg-[#1b1b1e] text-white">
-      <header className="flex items-center justify-between py-4">
-        <div className="flex items-center gap-2">
-          <ChevronLeft className="w-6 h-6" />
-          <span className="text-lg">회원정보 수정</span>
-        </div>
-      </header>
+      <GlobalHeader title={"회원정보 수정"} className={"border-none"} />
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="py-6 space-y-6">
@@ -105,26 +117,25 @@ export default function SettingPage({ searchParams }: Props) {
                   />
                 </FormControl>
                 <FormMessage />
-                <p className="text-xs text-muted-foreground mt-1">
-                  2~12자리만 가능- 영문, 숫자만 가능(한글, 특수문자 불가)
-                </p>
               </FormItem>
             )}
           />
 
           <FormField
             control={form.control}
-            name="password"
+            name="rawPassword"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>비밀번호 변경</FormLabel>
+                <FormLabel className="flex gap-1">
+                  현재 비밀번호 <LabelRequiredIcon />
+                </FormLabel>
                 <FormControl>
                   <div className="relative">
                     <input
                       type={showPassword ? "text" : "password"}
                       {...field}
                       className="w-full bg-[#262626] rounded-md px-4 py-3 text-sm pr-10"
-                      placeholder="영문, 숫자, 특수문자를 포함한 8~20자"
+                      placeholder="사용 중인 비밀번호를 입력해주세요"
                     />
                     <button
                       type="button"
@@ -139,10 +150,64 @@ export default function SettingPage({ searchParams }: Props) {
                     </button>
                   </div>
                 </FormControl>
-                <FormMessage />
-                <p className="text-xs text-muted-foreground mt-1">
-                  영문, 숫자, 특수문자를 포함한 8~20자
-                </p>
+                {form.formState.errors.rawPassword && (
+                  <p className="text-[#ff3f3f] text-sm mt-1">
+                    {form.formState.errors.rawPassword.message}
+                  </p>
+                )}
+                {isValidRawPassword && (
+                  <p className="text-primary text-sm mt-1">
+                    비밀번호가 일치합니다
+                  </p>
+                )}
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="flex gap-1">
+                  새 비밀번호 <LabelRequiredIcon />
+                </FormLabel>
+                <FormControl>
+                  <div className="relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      {...field}
+                      className="w-full bg-[#262626] rounded-md px-4 py-3 text-sm pr-10"
+                      placeholder="바꿀 비밀번호를 입력해주세요"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                    >
+                      {showPassword ? (
+                        <EyeOff className="h-4 w-4" />
+                      ) : (
+                        <Eye className="h-4 w-4" />
+                      )}
+                    </button>
+                  </div>
+                </FormControl>
+                {!form.formState.errors.password && !password && (
+                  <p className="text-xs text-white/30 mt-1">
+                    영문, 숫자, 특수문자를 포함한 8~20자만 사용 가능
+                  </p>
+                )}
+                {form.formState.errors.password && (
+                  <p className="text-[#ff3f3f] text-sm mt-1">
+                    {form.formState.errors.password.message}
+                  </p>
+                )}
+                {isValidPassword && (
+                  <p className="text-primary text-sm mt-1">
+                    사용할 수 있는 비밀번호입니다
+                  </p>
+                )}
               </FormItem>
             )}
           />
@@ -152,14 +217,16 @@ export default function SettingPage({ searchParams }: Props) {
             name="confirmPassword"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>비밀번호 확인</FormLabel>
+                <FormLabel className="flex gap-1">
+                  새 비밀번호 확인 <LabelRequiredIcon />
+                </FormLabel>
                 <FormControl>
                   <div className="relative">
                     <input
                       type={showConfirmPassword ? "text" : "password"}
                       {...field}
                       className="w-full bg-[#262626] rounded-md px-4 py-3 text-sm pr-10"
-                      placeholder="영문, 숫자, 특수문자를 포함한 8~20자"
+                      placeholder="1번 더 입력해주세요"
                     />
                     <button
                       type="button"
@@ -176,7 +243,16 @@ export default function SettingPage({ searchParams }: Props) {
                     </button>
                   </div>
                 </FormControl>
-                <FormMessage />
+                {form.formState.errors.confirmPassword && (
+                  <p className="text-[#ff3f3f] text-sm mt-1">
+                    {form.formState.errors.confirmPassword.message}
+                  </p>
+                )}
+                {isValidConfirmPassword && (
+                  <p className="text-primary text-sm mt-1">
+                    비밀번호가 일치합니다
+                  </p>
+                )}
               </FormItem>
             )}
           />
@@ -186,33 +262,42 @@ export default function SettingPage({ searchParams }: Props) {
         </form>
       </Form>
 
-      {isBusiness && <BusinessInfo status="활성" info={mockBusinessInfo} />}
+      <button
+        type="button"
+        className="flex justify-center items-center bg-[#151515] rounded-[5px] w-full h-[40px] mb-10"
+        onClick={() => router.push("/mypage/setting-business")}
+      >
+        <p className="text-xs font-medium">사업자 정보 관리</p>
+        <ChevronRight width={16} />
+      </button>
 
-      {isBusiness && (
-        <div className="flex items-center gap-2 text-xs text-white bg-[#985CFF]/15 px-4 py-4 rounded-md mt-4">
-          <Info size={14} fill="white" className="text-[#985CFF]" />
-          <p>회원 상태가 승인인 경우는 변경 불가하며 조회만 가능합니다.</p>
-        </div>
-      )}
+      {/*{isBusiness && <BusinessInfo status="활성" info={mockBusinessInfo} />}*/}
 
-      {isBusiness && <BusinessInfoSetting />}
+      {/*{isBusiness && (*/}
+      {/*  <div className="flex items-center gap-2 text-xs text-white bg-[#985CFF]/15 px-4 py-4 rounded-md mt-4">*/}
+      {/*    <Info size={14} fill="white" className="text-[#985CFF]" />*/}
+      {/*    <p>회원 상태가 승인인 경우는 변경 불가하며 조회만 가능합니다.</p>*/}
+      {/*  </div>*/}
+      {/*)}*/}
+
+      {/*{isBusiness && <BusinessInfoSetting />}*/}
 
       <div className="flex justify-center mb-20">
         <Withdrawal />
       </div>
 
-      <ConfirmModal
-        triggerText="사업자등록증 등록 신청 완료 모달"
-        title="사업자등록증 등록 신청 완료"
-        description="관리자의 사업자등록증 심사가 진행됩니다. 심사 완료 이후 광고가 가능합니다. "
-        isOpen={isConfirmModalOpen}
-        setIsOpen={setIsConfirmModalOpen}
-      />
+      {/*<ConfirmModal*/}
+      {/*  triggerText="사업자등록증 등록 신청 완료 모달"*/}
+      {/*  title="사업자등록증 등록 신청 완료"*/}
+      {/*  description="관리자의 사업자등록증 심사가 진행됩니다. 심사 완료 이후 광고가 가능합니다. "*/}
+      {/*  isOpen={isConfirmModalOpen}*/}
+      {/*  setIsOpen={setIsConfirmModalOpen}*/}
+      {/*/>*/}
 
       <div
         className={cn(
           "p-4",
-          isBusiness ? "mt-auto" : "fixed bottom-20 left-0 right-0 bg-[#1b1b1e]"
+          isBusiness ? "mt-auto" : "fixed bottom-0 left-0 right-0 bg-[#1b1b1e]"
         )}
       >
         <Button
