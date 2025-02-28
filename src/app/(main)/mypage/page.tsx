@@ -26,6 +26,7 @@ import FireIcon from "@/app/(main)/mypage/_components/service-icon/fire-icon";
 import TimerIcon from "@/app/(main)/mypage/_components/service-icon/timer-icon";
 import BookIcon from "@/app/(main)/mypage/_components/service-icon/book-icon";
 import CrownIcon from "@/app/(main)/mypage/_components/service-icon/crown-icon";
+import GlobalHeader from "@/components/container/global-header";
 
 function ProfileSection() {
   return (
@@ -104,26 +105,29 @@ export default function ProfilePage({ searchParams }: Props) {
 
   return (
     <div className="min-h-screen bg-[#1b1b1e] text-white">
-      <header className="flex items-center justify-between py-4 border-b border-white/10">
-        <div className="flex items-center gap-2">
-          <ArrowLeft className="w-6 h-6 mr-4" />
-          <span className="text-lg">마이페이지</span>
-        </div>
-        <div className="flex items-center gap-4">
-          <div className="relative">
-            <CartIcon />
-            <Badge className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] w-4 h-4 flex items-center justify-center p-0">
-              29
-            </Badge>
-          </div>
-          <div className="relative">
-            <MailIcon />
-            <Badge className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] w-4 h-4 flex items-center justify-center p-0">
-              26
-            </Badge>
-          </div>
-        </div>
-      </header>
+      <GlobalHeader
+        title={"마이페이지"}
+        buttons={[
+          {
+            node: (
+              <div className="flex items-center gap-4">
+                <div className="relative">
+                  <CartIcon />
+                  <Badge className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] w-4 h-4 flex items-center justify-center p-0">
+                    29
+                  </Badge>
+                </div>
+                <div className="relative">
+                  <MailIcon />
+                  <Badge className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] w-4 h-4 flex items-center justify-center p-0">
+                    26
+                  </Badge>
+                </div>
+              </div>
+            ),
+          },
+        ]}
+      />
 
       <ProfileSection />
 
@@ -132,7 +136,7 @@ export default function ProfilePage({ searchParams }: Props) {
           {
             title: "홈 위젯 설정",
             subtitle: "편리한 이용",
-            link: "",
+            link: "/mypage/widget-setting",
             icon: <HomeWidgetIcon />,
           },
           {

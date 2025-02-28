@@ -3,7 +3,6 @@
 import React from "react";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { node } from "prop-types";
 
 export default function GlobalHeader({
   title,
